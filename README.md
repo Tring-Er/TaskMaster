@@ -1,1 +1,1 @@
-This is a test
+This is a To Do project that helps you achieve you goals.
