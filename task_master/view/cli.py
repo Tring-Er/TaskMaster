@@ -5,7 +5,7 @@ class CLI:
     """This class interact with the console"""
 
     @staticmethod
-    def print_message(message:str) -> None:
+    def print_message(message: str) -> None:
         """It prints the message passed
 
         Args:
