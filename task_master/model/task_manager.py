@@ -1,6 +1,6 @@
 """Contains class TaskManager"""
 
-from model.file_opener import FileOpener
+from model.file_opener import create_file_opener
 
 
 class TaskManager:
@@ -9,18 +9,19 @@ class TaskManager:
     It's an interface on top of other objects
     """
 
-    @staticmethod
-    def add_task(tasks_file_path: str, task: str) -> None:
+    def __init__(self, tasks_file_path: str) -> None:
+        self.__file_opener = create_file_opener(tasks_file_path)
+
+    def add_task(self, task: str) -> None:
         """Adds a task to the tasks file and add a new line char at the end of the line
 
         Args:
             message (str): the task
         """
 
-        FileOpener.add_task_to_file(tasks_file_path, task + "\n")
+        self.__file_opener.add_task_to_file(task + "\n")
 
-    @staticmethod
-    def get_saved_tasks(tasks_file_path: str) -> str:
+    def get_saved_tasks(self) -> str:
         """Return the tasks file content
 
         Args:
@@ -30,4 +31,4 @@ class TaskManager:
             str: The content of the file
         """
 
-        return FileOpener.get_tasks_from_file(tasks_file_path)
+        return self.__file_opener.get_tasks_from_file()

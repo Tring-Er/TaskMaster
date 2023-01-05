@@ -8,10 +8,8 @@ from presenter.console_manager import ConsoleManager
 def main() -> None:
     """Main func"""
 
-    model = TaskManager()
-    view = CLI()
-    presenter = ConsoleManager()
-    presenter.compute(model, view)
+    presenter = ConsoleManager(TaskManager, CLI)
+    presenter.compute()
 
 
 if __name__ == "__main__":

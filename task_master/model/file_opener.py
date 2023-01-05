@@ -4,8 +4,10 @@
 class FileOpener:
     """It opens and convert tasks file"""
 
-    @staticmethod
-    def get_tasks_from_file(path: str) -> str:
+    def __init__(self, file_path: str) -> None:
+        self.__file_path = file_path
+
+    def get_tasks_from_file(self) -> str:
         """It opens the file containing tasks
 
         Args:
@@ -15,11 +17,10 @@ class FileOpener:
             str: The lines contained in the file
         """
 
-        with open(path, "r", encoding="utf-8") as tasks_file:
+        with open(self.__file_path, "r", encoding="utf-8") as tasks_file:
             return tasks_file.readlines()
 
-    @staticmethod
-    def add_task_to_file(path: str, task: str) -> None:
+    def add_task_to_file(self, task: str) -> None:
         """Add the task passed to the path passed
 
         Args:
@@ -27,5 +28,17 @@ class FileOpener:
             task (str): The task to add
         """
 
-        with open(path, "a", encoding="utf-8") as tasks_file:
+        with open(self.__file_path, "a", encoding="utf-8") as tasks_file:
             tasks_file.write(task)
+
+
+def create_file_opener(file_path: str) -> FileOpener:
+    """Create an instance of the FileOpener class
+
+    Args:
+        file_path (str): Path to pass to the FileOpener init
+
+    Returns:
+        FileOpener: FileOpener instance
+    """
+    return FileOpener(file_path)
