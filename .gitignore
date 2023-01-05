@@ -1,2 +1,3 @@
 .vscode/
 **/__pycache__/
+task_master/model/tasks.txt

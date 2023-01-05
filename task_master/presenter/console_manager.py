@@ -16,6 +16,6 @@ class ConsoleManager:
             view (CLI): The CLI object
         """
 
+        tasks_file_path = r"C:\Altro\taskmaster\task_master\model\tasks.txt"
         message = view.input_message()
-        model_message = model.task(message)
-        view.print_message(model_message)
+        model.add_task(tasks_file_path, message)
