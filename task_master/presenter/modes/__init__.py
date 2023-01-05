@@ -11,7 +11,7 @@ Remember that the class MUST be a Mode class
 import importlib
 import os
 
-from presenter.modes.mode import Mode
+from presenter.modes.mode import Mode  # noqa: F401
 
 files = os.listdir("./task_master/presenter/modes")
 MODES = {}
