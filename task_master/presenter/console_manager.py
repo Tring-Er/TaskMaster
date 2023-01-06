@@ -13,6 +13,21 @@ class ConsoleManager(Presenter):
         self.model = model
         self.view = view
 
+    @staticmethod
+    def __get_modes_simbols() -> str:
+        """Returns all the MODES symbols (the string paired with the mode) excluding the
+        InvalidMode's one
+
+        Returns:
+            str: The string contaning all the symbols
+            it follows this pattern: "symbol_1/symbol_2/.../symbol_n"
+        """
+
+        modes_symbols = list(MODES.keys())
+        modes_symbols.remove("")
+        modes_symbols_excluded_invalid = "/".join(modes_symbols)
+        return modes_symbols_excluded_invalid
+
     def compute(self) -> None:
         """Make the program run
 
@@ -21,7 +36,8 @@ class ConsoleManager(Presenter):
             view (CLI): The CLI object
         """
 
-        self.view.print_message("Select mode (w/r)")
+        modes_symbols = self.__get_modes_simbols()
+        self.view.print_message(f"Select mode ({modes_symbols})")
         input_mode = self.view.input_message()
         selected_mode: Mode = MODES.get(input_mode, MODES[""])
         selected_mode.execute(self)

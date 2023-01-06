@@ -11,7 +11,7 @@ Remember that the class MUST be a Mode class
 import importlib
 import os
 
-from presenter.modes.mode import Mode  # noqa: F401
+from presenter.modes.mode import Mode
 
 files = os.listdir("./task_master/presenter/modes")
 MODES = {}
@@ -22,10 +22,7 @@ for file in files:
         continue
     module = importlib.import_module("presenter.modes." + module_name)
     module_words = module_name.split("_")
-    if len(module_words) > 1:
-        capitalized_module_words = map(lambda word: word.capitalize(), module_words)
-    else:
-        capitalized_module_words = module_words[0].capitalize()
+    capitalized_module_words = map(lambda word: word.capitalize(), module_words)
     class_name = "".join(capitalized_module_words)
     _class = getattr(module, class_name)
     MODES[_class.CLI_COMMAND] = _class
