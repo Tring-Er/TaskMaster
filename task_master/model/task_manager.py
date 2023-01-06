@@ -31,4 +31,5 @@ class TaskManager:
             str: The content of the file
         """
 
-        return self.__file_opener.get_tasks_from_file()
+        saved_tasks = self.__file_opener.get_tasks_from_file()
+        return "".join(saved_tasks)

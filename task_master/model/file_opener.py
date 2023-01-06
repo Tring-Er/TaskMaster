@@ -7,7 +7,7 @@ class FileOpener:
     def __init__(self, file_path: str) -> None:
         self.__file_path = file_path
 
-    def get_tasks_from_file(self) -> str:
+    def get_tasks_from_file(self) -> list[str]:
         """It opens the file containing tasks
 
         Args:
