@@ -45,7 +45,8 @@ class ConsoleManager(Presenter):
         """
 
         modes_symbols = self.__get_modes_simbols()
-        self.view.print_message(Messages.CHOOSE_MODE.format(modes_symbols))
-        input_mode = self.view.input_message()
-        selected_mode: Mode = MODES.get(input_mode, MODES[""])
-        selected_mode.execute(self)
+        while True:
+            self.view.print_message(Messages.CHOOSE_MODE.format(modes_symbols))
+            input_mode = self.view.input_message()
+            selected_mode: Mode = MODES.get(input_mode, MODES[""])
+            selected_mode.execute(self)
