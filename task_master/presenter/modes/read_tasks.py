@@ -1,7 +1,13 @@
-"""This file contains the class to read all tasks in the tasks file"""
+"""This module contains the class to read all tasks in the tasks file and all it's messages"""
+
+from enum import StrEnum
 
 from presenter.presenter import Presenter
 from presenter.modes.mode import Mode
+
+
+class Messages(StrEnum):
+    """Messages (string constants) used by the ReadTasks object"""
 
 
 class ReadTasks(Mode):

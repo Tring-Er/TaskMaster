@@ -1,9 +1,17 @@
-"""This class contains the presenter"""
+"""This class contains the presenter and messages (strings constants) used by the presenter"""
+
+from enum import StrEnum
 
 from model.task_manager import TaskManager
 from presenter.presenter import Presenter
 from presenter.modes import MODES, Mode
 from view.cli import CLI
+
+
+class Messages(StrEnum):
+    """All Messages used by console_manager"""
+
+    CHOOSE_MODE = "Select mode ({})"
 
 
 class ConsoleManager(Presenter):
@@ -37,7 +45,7 @@ class ConsoleManager(Presenter):
         """
 
         modes_symbols = self.__get_modes_simbols()
-        self.view.print_message(f"Select mode ({modes_symbols})")
+        self.view.print_message(Messages.CHOOSE_MODE.format(modes_symbols))
         input_mode = self.view.input_message()
         selected_mode: Mode = MODES.get(input_mode, MODES[""])
         selected_mode.execute(self)
