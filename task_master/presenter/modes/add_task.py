@@ -17,7 +17,7 @@ class Messages(StrEnum):
 class AddTask(Mode):
     """This class execute the code to add a task to the tasks file"""
 
-    CLI_COMMAND = "w"
+    CLI_COMMAND = "add task"
 
     @staticmethod
     def execute(presenter: Presenter) -> None:

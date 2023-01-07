@@ -16,7 +16,7 @@ class Messages(StrEnum):
 class ExitMode(Mode):
     """Exits the program"""
 
-    CLI_COMMAND = "e"
+    CLI_COMMAND = "exit"
 
     @staticmethod
     def execute(presenter: Presenter) -> None:

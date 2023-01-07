@@ -13,7 +13,7 @@ class Messages(StrEnum):
 class ReadTasks(Mode):
     """This class execute the code to read all the tasks in the tasks file"""
 
-    CLI_COMMAND = "r"
+    CLI_COMMAND = "read tasks"
 
     @staticmethod
     def execute(presenter: Presenter) -> None:
