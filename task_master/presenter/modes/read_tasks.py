@@ -17,5 +17,6 @@ class ReadTasks(Mode):
 
     @staticmethod
     def execute(presenter: Presenter) -> None:
-        file_content = presenter.model.get_saved_tasks()
-        presenter.view.print_message(file_content)
+        tasks_list = presenter.model.get_saved_tasks()
+        tasks_formatted_string = presenter.model.parse_tasks(tasks_list)
+        presenter.view.print_message(tasks_formatted_string)

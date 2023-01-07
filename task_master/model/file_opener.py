@@ -31,6 +31,16 @@ class FileOpener:
         with open(self.__file_path, "a", encoding="utf-8") as tasks_file:
             tasks_file.write(task)
 
+    def overwrite_tasks_file(self, tasks: list[str]) -> None:
+        """Overwrite the tasks file with the tasks list provided
+
+        Args:
+            tasks (list[str]): The tasks list to overwrite with
+        """
+
+        with open(self.__file_path, "w", encoding="utf-8") as tasks_file:
+            tasks_file.writelines(tasks)
+
 
 def create_file_opener(file_path: str) -> FileOpener:
     """Create an instance of the FileOpener class
@@ -41,4 +51,5 @@ def create_file_opener(file_path: str) -> FileOpener:
     Returns:
         FileOpener: FileOpener instance
     """
+
     return FileOpener(file_path)

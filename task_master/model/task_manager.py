@@ -21,7 +21,7 @@ class TaskManager:
 
         self.__file_opener.add_task_to_file(task + "\n")
 
-    def get_saved_tasks(self) -> str:
+    def get_saved_tasks(self) -> list[str]:
         """Return the tasks file content
 
         Args:
@@ -31,5 +31,31 @@ class TaskManager:
             str: The content of the file
         """
 
-        saved_tasks = self.__file_opener.get_tasks_from_file()
-        return "".join(saved_tasks)
+        return self.__file_opener.get_tasks_from_file()
+
+    def remove_task(self, task_index: int) -> None:
+        """Removes a task from the tasks file
+
+        Args:
+            task_index (int): The index of the task
+        """
+
+        tasks = self.__file_opener.get_tasks_from_file()
+        tasks.pop(task_index)
+        self.__file_opener.overwrite_tasks_file(tasks)
+
+    def parse_tasks(self, tasks: list[str]) -> str:
+        """It returns a string with this pattern:
+        '{task_index}- {task}\n\n{task_index}- {task}\n\n...{task_index}- {task}\n\n'
+
+        Args:
+            tasks (list[str]): The tasks to put in the string
+
+        Returns:
+            str: The string with the pattern written above
+        """
+
+        string_to_return = ""
+        for task_number, task in enumerate(tasks, 1):
+            string_to_return += f"{task_number}- {task}\n"
+        return string_to_return
