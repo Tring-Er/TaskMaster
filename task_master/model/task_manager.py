@@ -33,7 +33,7 @@ class TaskManager:
 
         return self.__file_opener.get_tasks_from_file()
 
-    def remove_task(self, task_index: int) -> None:
+    def remove_task(self, task_index: int) -> None | Exception:
         """Removes a task from the tasks file
 
         Args:
@@ -41,6 +41,8 @@ class TaskManager:
         """
 
         tasks = self.__file_opener.get_tasks_from_file()
+        if not 0 <= task_index <= len(tasks) - 1:
+            return IndexError()
         tasks.pop(task_index)
         self.__file_opener.overwrite_tasks_file(tasks)
 

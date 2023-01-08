@@ -10,6 +10,7 @@ class Messages(StrEnum):
     """This class contains all messages (string constants) used by RemoveTask object"""
 
     SELECT_TASK_TO_REMOVE = "Select a task to remove"
+    NO_NUMBER_FOUND = "No task found with that number"
 
 
 class RemoveTask(Mode):
@@ -25,4 +26,6 @@ class RemoveTask(Mode):
         presenter.view.print_message(Messages.SELECT_TASK_TO_REMOVE)
         task_number_to_remove = presenter.view.input_message()
         task_index_to_remove = int(task_number_to_remove) - 1
-        presenter.model.remove_task(task_index_to_remove)
+        error = presenter.model.remove_task(task_index_to_remove)
+        if isinstance(error, IndexError):
+            presenter.view.print_message(Messages.NO_NUMBER_FOUND)
