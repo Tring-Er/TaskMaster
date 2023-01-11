@@ -1,6 +1,6 @@
 """Contains class TaskManager"""
 
-from model.file_opener import create_file_opener
+from model.file_opener import create_file_manager
 
 
 class TaskManager:
@@ -9,8 +9,8 @@ class TaskManager:
     It's an interface on top of other objects
     """
 
-    def __init__(self, tasks_file_path: str) -> None:
-        self.__file_opener = create_file_opener(tasks_file_path)
+    def __init__(self) -> None:
+        self.__file_opener = create_file_manager()
 
     def add_task(self, task: str) -> None:
         """Adds a task to the tasks file and add a new line char at the end of the line
@@ -19,7 +19,7 @@ class TaskManager:
             message (str): the task
         """
 
-        self.__file_opener.add_task_to_file(task + "\n")
+        self.__file_opener.add_task(task + "\n")
 
     def get_saved_tasks(self) -> list[str]:
         """Return the tasks file content
@@ -31,7 +31,7 @@ class TaskManager:
             str: The content of the file
         """
 
-        return self.__file_opener.get_tasks_from_file()
+        return self.__file_opener.get_tasks()
 
     def remove_task(self, task_index: int) -> None | Exception:
         """Removes a task from the tasks file
@@ -40,11 +40,11 @@ class TaskManager:
             task_index (int): The index of the task
         """
 
-        tasks = self.__file_opener.get_tasks_from_file()
+        tasks = self.__file_opener.get_tasks()
         if not 0 <= task_index <= len(tasks) - 1:
             return IndexError()
         tasks.pop(task_index)
-        self.__file_opener.overwrite_tasks_file(tasks)
+        self.__file_opener.overwrite_tasks(tasks)
 
     def parse_tasks(self, tasks: list[str]) -> str:
         """It returns a string with this pattern:

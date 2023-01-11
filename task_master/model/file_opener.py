@@ -1,13 +1,16 @@
 """Contains FileOpener class"""
 
+from os import getcwd
 
-class FileOpener:
+
+class FileManager:
     """It opens and convert tasks file"""
 
-    def __init__(self, file_path: str) -> None:
-        self.__file_path = file_path
+    def __init__(self) -> None:
+        directory = getcwd() + r"\task_master\model\tasks.txt"
+        self.__file_path = directory
 
-    def get_tasks_from_file(self) -> list[str]:
+    def get_tasks(self) -> list[str]:
         """It opens the file containing tasks
 
         Args:
@@ -20,7 +23,7 @@ class FileOpener:
         with open(self.__file_path, "r", encoding="utf-8") as tasks_file:
             return tasks_file.readlines()
 
-    def add_task_to_file(self, task: str) -> None:
+    def add_task(self, task: str) -> None:
         """Add the task passed to the path passed
 
         Args:
@@ -31,7 +34,7 @@ class FileOpener:
         with open(self.__file_path, "a", encoding="utf-8") as tasks_file:
             tasks_file.write(task)
 
-    def overwrite_tasks_file(self, tasks: list[str]) -> None:
+    def overwrite_tasks(self, tasks: list[str]) -> None:
         """Overwrite the tasks file with the tasks list provided
 
         Args:
@@ -42,7 +45,7 @@ class FileOpener:
             tasks_file.writelines(tasks)
 
 
-def create_file_opener(file_path: str) -> FileOpener:
+def create_file_manager() -> FileManager:
     """Create an instance of the FileOpener class
 
     Args:
@@ -52,4 +55,4 @@ def create_file_opener(file_path: str) -> FileOpener:
         FileOpener: FileOpener instance
     """
 
-    return FileOpener(file_path)
+    return FileManager()
