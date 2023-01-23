@@ -23,8 +23,7 @@ class ConsoleManager(Presenter):
 
     @staticmethod
     def __get_modes_simbols() -> str:
-        """Returns all the MODES symbols (the string paired with the mode) excluding the
-        InvalidMode's one
+        """Returns all the MODES symbols (the string paired with the mode) excluding the InvalidMode
 
         Returns:
             str: The string contaning all the symbols
@@ -37,12 +36,7 @@ class ConsoleManager(Presenter):
         return modes_symbols_excluded_invalid
 
     def compute(self) -> None:
-        """Make the program run
-
-        Args:
-            model (TaskManager): The TaskManager object
-            view (CLI): The CLI object
-        """
+        """Make the program run"""
 
         modes_symbols = self.__get_modes_simbols()
         while True:

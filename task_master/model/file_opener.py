@@ -7,8 +7,9 @@ class FileManager:
     """It opens and convert tasks file"""
 
     def __init__(self) -> None:
-        directory = getcwd() + r"\task_master\model\tasks.txt"
-        self.__file_path = directory
+        directory = getcwd() + r"\task_master\model"
+        self.__file_path = directory + r"\tasks.txt"
+        self.__export_file_path = directory + r"\exported_tasks.txt"
 
     def get_tasks(self) -> list[str]:
         """It opens the file containing tasks
@@ -43,6 +44,14 @@ class FileManager:
 
         with open(self.__file_path, "w", encoding="utf-8") as tasks_file:
             tasks_file.writelines(tasks)
+
+    def export_tasks(self) -> None:
+        """Exports all the data from the tasks file"""
+
+        with open(self.__file_path, "r", encoding="utf-8") as file_tasks:
+            file_content = file_tasks.readlines()
+        with open(self.__export_file_path, "w", encoding="utf-8") as export_file:
+            export_file.writelines(file_content)
 
 
 def create_file_manager() -> FileManager:

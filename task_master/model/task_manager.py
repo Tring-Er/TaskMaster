@@ -38,6 +38,9 @@ class TaskManager:
 
         Args:
             task_index (int): The index of the task
+
+        Returns:
+            None | Exception: Returns an Exeption if the index is out of range
         """
 
         tasks = self.__file_opener.get_tasks()
@@ -48,7 +51,7 @@ class TaskManager:
 
     def parse_tasks(self, tasks: list[str]) -> str:
         """It returns a string with this pattern:
-        '{task_index}- {task}\n\n{task_index}- {task}\n\n...{task_index}- {task}\n\n'
+        '{task_index}- {task}\\n\\n{task_index}- {task}\\n\\n...{task_index}- {task}\\n\\n'
 
         Args:
             tasks (list[str]): The tasks to put in the string
@@ -61,3 +64,8 @@ class TaskManager:
         for task_number, task in enumerate(tasks, 1):
             string_to_return += f"{task_number}- {task}\n"
         return string_to_return
+
+    def export_tasks(self) -> None:
+        """Exports tasks into the same directory"""
+
+        self.__file_opener.export_tasks()

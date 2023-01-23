@@ -17,12 +17,12 @@ files = os.listdir("./task_master/presenter/modes")
 MODES = {}
 
 for file in files:
-    module_name = file.split(".py")[0]
+    module_name = file.removesuffix(".py")
     if module_name in ["__init__", "mode", "__pycache__"]:
         continue
     module = importlib.import_module("presenter.modes." + module_name)
-    module_words = module_name.split("_")
-    capitalized_module_words = map(lambda word: word.capitalize(), module_words)
+    words_in_module_name = module_name.split("_")
+    capitalized_module_words = map(lambda word: word.capitalize(), words_in_module_name)
     class_name = "".join(capitalized_module_words)
     _class = getattr(module, class_name)
     MODES[_class.CLI_COMMAND] = _class
