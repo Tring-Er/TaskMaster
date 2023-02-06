@@ -1,9 +1,9 @@
 """This module contains the GUI object with all the gui widgets"""
 
 
-from view.gui_objects.button import Button
-from view.gui_objects.label import Label
-from view.gui_objects.window import Window
+from view.gui_widgets.button import Button
+from view.gui_widgets.label import Label
+from view.gui_widgets.window import Window
 
 
 class GUI:

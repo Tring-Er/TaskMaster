@@ -3,7 +3,7 @@
 from enum import StrEnum
 from sys import exit as sys_exit
 
-from presenter.modes.mode import Mode
+from presenter.cli.modes.mode import Mode
 from presenter.presenter import Presenter
 
 

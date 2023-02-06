@@ -3,7 +3,7 @@
 
 from tkinter import Tk, Misc
 
-from view.gui_objects.widget import Widget
+from view.gui_widgets.widget import Widget
 
 
 class Window(Widget):

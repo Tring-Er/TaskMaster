@@ -4,7 +4,7 @@ used
 
 from enum import StrEnum
 
-from presenter.modes.mode import Mode
+from presenter.cli.modes.mode import Mode
 from presenter.presenter import Presenter
 
 

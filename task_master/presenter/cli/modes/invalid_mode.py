@@ -5,7 +5,7 @@ all messages used by it
 from enum import StrEnum
 
 from presenter.presenter import Presenter
-from presenter.modes.mode import Mode
+from presenter.cli.modes.mode import Mode
 
 
 class Messages(StrEnum):

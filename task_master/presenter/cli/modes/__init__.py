@@ -11,16 +11,16 @@ Remember that the class MUST be a Mode class
 import importlib
 import os
 
-from presenter.modes.mode import Mode
+from presenter.cli.modes.mode import Mode
 
-files = os.listdir("./task_master/presenter/modes")
+files = os.listdir("./task_master/presenter/cli/modes")
 MODES = {}
 
 for file in files:
     module_name = file.removesuffix(".py")
     if module_name in ["__init__", "mode", "__pycache__"]:
         continue
-    module = importlib.import_module("presenter.modes." + module_name)
+    module = importlib.import_module("presenter.cli.modes." + module_name)
     words_in_module_name = module_name.split("_")
     capitalized_module_words = map(lambda word: word.capitalize(), words_in_module_name)
     class_name = "".join(capitalized_module_words)

@@ -4,7 +4,7 @@ from enum import StrEnum
 
 from model.task_manager import TaskManager
 from presenter.presenter import Presenter
-from presenter.modes import MODES, Mode
+from presenter.cli.modes import MODES, Mode
 from view.cli import CLI
 
 

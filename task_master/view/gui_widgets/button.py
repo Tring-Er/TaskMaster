@@ -3,7 +3,7 @@
 
 from tkinter import Button as TkButton, Misc
 
-from view.gui_objects.widget import Widget
+from view.gui_widgets.widget import Widget
 
 
 class Button(Widget):
