@@ -2,14 +2,28 @@
 
 from os import getcwd
 
+from use_cases.external_interfaces.Readable import Readable
+from use_cases.external_interfaces.Sendable import Sendable
+from entities.Task import Task
 
-class FileManager:
+
+class FileManager(Readable, Sendable):
     """It opens and convert tasks file"""
 
     def __init__(self) -> None:
         directory = getcwd() + r"/task_master/model"
         self.__file_path = directory + r"/tasks.txt"
         self.__export_file_path = directory + r"/exported_tasks.txt"
+    
+    def read(self) -> list[Task]:
+        tasks = []
+        raw_tasks = self.get_tasks()
+        for raw_task in raw_tasks:
+            tasks.append(Task(raw_task))
+        return tasks
+    
+    def send(self, task: Task) -> None:
+        self.add_task(task.text)
 
     def get_tasks(self) -> list[str]:
         """It opens the file containing tasks
