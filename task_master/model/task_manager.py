@@ -2,6 +2,8 @@
 
 from model.file_opener import create_file_manager
 
+from entities.Task import Task
+
 
 class TaskManager:
     """
@@ -12,14 +14,14 @@ class TaskManager:
     def __init__(self) -> None:
         self.__file_opener = create_file_manager()
 
-    def add_task(self, task: str) -> None:
+    def add_task(self, task: Task) -> None:
         """Adds a task to the tasks file and add a new line char at the end of the line
 
         Args:
-            message (str): the task
+            task (Task): the task object
         """
 
-        self.__file_opener.add_task(task + "\n")
+        self.__file_opener.add_task(task.text + "\n")
 
     def get_saved_tasks(self) -> list[str]:
         """Return the tasks file content
