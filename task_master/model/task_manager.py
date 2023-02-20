@@ -3,6 +3,7 @@
 from model.file_opener import create_file_manager
 
 from entities.Task import Task
+from use_cases.TasksManager import TasksManager as _TaskManager
 
 
 class TaskManager:
@@ -21,7 +22,7 @@ class TaskManager:
             task (Task): the task object
         """
 
-        self.__file_opener.add_task(task.text + "\n")
+        _TaskManager.add_task(self.__file_opener, task)
 
     def get_saved_tasks(self) -> list[str]:
         """Return the tasks file content

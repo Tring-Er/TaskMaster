@@ -23,7 +23,7 @@ class FileManager(Readable, Sendable):
         return tasks
     
     def send(self, task: Task) -> None:
-        self.add_task(task.text)
+        self.add_task(task.text + "\n")
 
     def get_tasks(self) -> list[str]:
         """It opens the file containing tasks
