@@ -1,0 +1,13 @@
+"""A generic object that can be used to send data to"""
+
+
+from abc import ABC, abstractmethod
+
+from entities.Task import Task
+
+
+class Sendable(ABC):
+    
+    @abstractmethod
+    def send(self, task: Task) -> None:
+        """Sends a task object ot of the use_case"""
