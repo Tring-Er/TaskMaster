@@ -2,13 +2,13 @@
 used
 """
 
-from enum import StrEnum
+from enum import Enum
 
 from presenter.cli.modes.mode import Mode
 from presenter.presenter import Presenter
 
 
-class Messages(StrEnum):
+class Messages(Enum):
     """Messages (string constants) used by the AddTask object"""
 
     ASK_FOR_TASK = "Insert a task to save"
@@ -21,6 +21,6 @@ class AddTask(Mode):
 
     @staticmethod
     def execute(presenter: Presenter) -> None:
-        presenter.view.print_message(Messages.ASK_FOR_TASK)
+        presenter.view.print_message(Messages.ASK_FOR_TASK.value)
         message = presenter.view.input_message()
         presenter.model.add_task(message)

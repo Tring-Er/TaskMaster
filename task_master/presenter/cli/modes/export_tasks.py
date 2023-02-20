@@ -1,12 +1,12 @@
 """This module contains the ExportTasks object and all messages used by it"""
 
-from enum import StrEnum
+from enum import Enum
 
 from presenter.cli.modes.mode import Mode
 from presenter.presenter import Presenter
 
 
-class Messages(StrEnum):
+class Messages(Enum):
     """This class contains all messages (string constants) used by ExportTasks object"""
 
     TASKS_EXPORTED = "Tasks exported!"
@@ -20,4 +20,4 @@ class ExportTasks(Mode):
     @staticmethod
     def execute(presenter: Presenter) -> None:
         presenter.model.export_tasks()
-        presenter.view.print_message(Messages.TASKS_EXPORTED)
+        presenter.view.print_message(Messages.TASKS_EXPORTED.value)

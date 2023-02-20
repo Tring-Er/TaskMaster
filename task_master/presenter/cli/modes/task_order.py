@@ -1,12 +1,12 @@
 """This module contains the TaskOrder object and all messages used by it"""
 
-from enum import StrEnum
+from enum import Enum
 
 from presenter.cli.modes.mode import Mode
 from presenter.presenter import Presenter
 
 
-class Messages(StrEnum):
+class Messages(Enum):
     """This class contains all messages (string constants) used by TaskOrder object"""
 
     SELECT_TASK_TO_MOVE = "Select a task to change position"
@@ -23,8 +23,8 @@ class TaskOrder(Mode):
         tasks = presenter.model.get_saved_tasks()
         parsed_tasks = presenter.model.parse_tasks(tasks)
         presenter.view.print_message(parsed_tasks)
-        presenter.view.print_message(Messages.SELECT_TASK_TO_MOVE)
+        presenter.view.print_message(Messages.SELECT_TASK_TO_MOVE.value)
         old_task_position = presenter.view.input_message()
-        presenter.view.print_message(Messages.SELECT_POSITION)
+        presenter.view.print_message(Messages.SELECT_POSITION.value)
         new_task_position = presenter.view.input_message()
         presenter.model.change_task_position(tasks, old_task_position, new_task_position)
