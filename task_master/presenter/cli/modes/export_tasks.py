@@ -4,6 +4,7 @@ from enum import Enum
 
 from presenter.cli.modes.mode import Mode
 from presenter.presenter import Presenter
+from model.file_opener import FileManager
 
 
 class Messages(Enum):
@@ -19,5 +20,6 @@ class ExportTasks(Mode):
 
     @staticmethod
     def execute(presenter: Presenter) -> None:
-        presenter.model.export_tasks()
+        file_manager = FileManager()
+        file_manager.export_tasks()
         presenter.view.print_message(Messages.TASKS_EXPORTED.value)

@@ -7,36 +7,27 @@ from use_cases.external_interfaces.Sendable import Sendable
 from entities.Task import Task
 
 
+DIRETORY = getcwd() + r"/task_master/model"
+FILE_PATH = DIRETORY + r"/tasks.txt"
+EXPORT_FILE_PATH = DIRETORY + r"/exported_tasks.txt"
+
+
 class FileManager(Readable, Sendable):
     """It opens and convert tasks file"""
-
-    def __init__(self) -> None:
-        directory = getcwd() + r"/task_master/model"
-        self.__file_path = directory + r"/tasks.txt"
-        self.__export_file_path = directory + r"/exported_tasks.txt"
     
     def read(self) -> list[Task]:
         tasks = []
-        with open(self.__file_path, "r", encoding="utf-8") as tasks_file:
+        with open(FILE_PATH, "r", encoding="utf-8") as tasks_file:
             for task_line in tasks_file.readlines():
                 parsed_task = task_line.replace("\n", "")
                 tasks.append(Task(parsed_task))
         return tasks
     
-    def send(self, task: Task) -> None:
-        # add new line char (write this when adding a converter)
-        self.add_task(task.text + "\n")
-
-    def add_task(self, task: str) -> None:
-        """Add the task passed to the path passed
-
-        Args:
-            path (str): The tasks file absolute path
-            task (str): The task to add
-        """
-
-        with open(self.__file_path, "a", encoding="utf-8") as tasks_file:
-            tasks_file.write(task)
+    def send(self, tasks: list[Task]) -> None:
+        with open(FILE_PATH, "w", encoding="utf-8") as tasks_file:
+            for task in tasks:
+                # add new line char (write this when adding a converter)
+                tasks_file.write(task.text + "\n")
 
     def overwrite_tasks(self, tasks: list[str]) -> None:
         """Overwrite the tasks file with the tasks list provided
@@ -45,15 +36,15 @@ class FileManager(Readable, Sendable):
             tasks (list[str]): The tasks list to overwrite with
         """
 
-        with open(self.__file_path, "w", encoding="utf-8") as tasks_file:
+        with open(FILE_PATH, "w", encoding="utf-8") as tasks_file:
             tasks_file.writelines(tasks)
 
     def export_tasks(self) -> None:
         """Exports all the data from the tasks file"""
 
-        with open(self.__file_path, "r", encoding="utf-8") as file_tasks:
+        with open(FILE_PATH, "r", encoding="utf-8") as file_tasks:
             file_content = file_tasks.readlines()
-        with open(self.__export_file_path, "w", encoding="utf-8") as export_file:
+        with open(EXPORT_FILE_PATH, "w", encoding="utf-8") as export_file:
             export_file.writelines(file_content)
 
 

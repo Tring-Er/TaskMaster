@@ -10,6 +10,8 @@ class TaskManager:
     """
     Manages tasks
     It's an interface on top of other objects
+
+    THIS OBJECT WILL BE DEPRECATED AND REMOVED SOON
     """
 
     def __init__(self) -> None:
@@ -22,7 +24,7 @@ class TaskManager:
             task (Task): the task object
         """
 
-        _TaskManager.add_task(self.__file_opener, task)
+        _TaskManager.add_task(task, self.__file_opener)
 
     def get_saved_tasks(self) -> list[Task]:
         """Return the tasks saved in the tasks file
@@ -33,42 +35,14 @@ class TaskManager:
 
         return _TaskManager.read_tasks(self.__file_opener)
 
-    def remove_task(self, task_index: int) -> None | Exception:
+    def remove_task(self, task: Task) -> None:
         """Removes a task from the tasks file
 
         Args:
-            task_index (int): The index of the task
-
-        Returns:
-            None | Exception: Returns an Exeption if the index is out of range
+            task (Task): The task to remove
         """
 
-        tasks = self.__file_opener.read()
-        if not 0 <= task_index <= len(tasks) - 1:
-            return IndexError()
-        tasks.pop(task_index)
-        self.__file_opener.overwrite_tasks(tasks)
-
-    def parse_tasks(self, tasks: list[Task]) -> str:
-        """It returns a string with this pattern:
-        '{task_index}- {task}\\n\\n{task_index}- {task}\\n\\n...{task_index}- {task}\\n\\n'
-
-        Args:
-            tasks (list[str]): The tasks to put in the string
-
-        Returns:
-            str: The string with the pattern written above
-        """
-
-        string_to_return = ""
-        for task_number, task in enumerate(tasks, 1):
-            string_to_return += f"{task_number}- {task.text}\n"
-        return string_to_return
-
-    def export_tasks(self) -> None:
-        """Exports tasks into the same directory"""
-
-        self.__file_opener.export_tasks()
+        _TaskManager.remove_task(task, self.__file_opener)
 
     def change_task_position(self,
                              tasks: list[str],

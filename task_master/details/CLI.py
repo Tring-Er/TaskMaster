@@ -10,8 +10,9 @@ class CLI(Readable, Sendable):
         message = input("Write a text: ")
         return [self.converter(message)]
     
-    def send(self, task: Task) -> None:
-        print(task.text)
+    def send(self, tasks: list[Task]) -> None:
+        for task in tasks:
+            print(task.text)
     
     def converter(self, text: str) -> Task:
         return Task(text)
