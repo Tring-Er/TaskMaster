@@ -17,26 +17,15 @@ class FileManager(Readable, Sendable):
     
     def read(self) -> list[Task]:
         tasks = []
-        raw_tasks = self.get_tasks()
-        for raw_task in raw_tasks:
-            tasks.append(Task(raw_task))
+        with open(self.__file_path, "r", encoding="utf-8") as tasks_file:
+            for task_line in tasks_file.readlines():
+                parsed_task = task_line.replace("\n", "")
+                tasks.append(Task(parsed_task))
         return tasks
     
     def send(self, task: Task) -> None:
+        # add new line char (write this when adding a converter)
         self.add_task(task.text + "\n")
-
-    def get_tasks(self) -> list[str]:
-        """It opens the file containing tasks
-
-        Args:
-            path (str): The absolute path of the tasks file
-
-        Returns:
-            str: The lines contained in the file
-        """
-
-        with open(self.__file_path, "r", encoding="utf-8") as tasks_file:
-            return tasks_file.readlines()
 
     def add_task(self, task: str) -> None:
         """Add the task passed to the path passed

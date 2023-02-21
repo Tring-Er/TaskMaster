@@ -16,7 +16,7 @@ class TaskManager:
         self.__file_opener = create_file_manager()
 
     def add_task(self, task: Task) -> None:
-        """Adds a task to the tasks file and add a new line char at the end of the line
+        """Adds a task to the tasks file
 
         Args:
             task (Task): the task object
@@ -24,17 +24,14 @@ class TaskManager:
 
         _TaskManager.add_task(self.__file_opener, task)
 
-    def get_saved_tasks(self) -> list[str]:
-        """Return the tasks file content
-
-        Args:
-            tasks_file_path (str): The path of the tasks file
+    def get_saved_tasks(self) -> list[Task]:
+        """Return the tasks saved in the tasks file
 
         Returns:
-            str: The content of the file
+            list[Task]: The tasks on the task file
         """
 
-        return self.__file_opener.get_tasks()
+        return _TaskManager.read_tasks(self.__file_opener)
 
     def remove_task(self, task_index: int) -> None | Exception:
         """Removes a task from the tasks file
@@ -46,13 +43,13 @@ class TaskManager:
             None | Exception: Returns an Exeption if the index is out of range
         """
 
-        tasks = self.__file_opener.get_tasks()
+        tasks = self.__file_opener.read()
         if not 0 <= task_index <= len(tasks) - 1:
             return IndexError()
         tasks.pop(task_index)
         self.__file_opener.overwrite_tasks(tasks)
 
-    def parse_tasks(self, tasks: list[str]) -> str:
+    def parse_tasks(self, tasks: list[Task]) -> str:
         """It returns a string with this pattern:
         '{task_index}- {task}\\n\\n{task_index}- {task}\\n\\n...{task_index}- {task}\\n\\n'
 
@@ -65,7 +62,7 @@ class TaskManager:
 
         string_to_return = ""
         for task_number, task in enumerate(tasks, 1):
-            string_to_return += f"{task_number}- {task}\n"
+            string_to_return += f"{task_number}- {task.text}\n"
         return string_to_return
 
     def export_tasks(self) -> None:
