@@ -28,7 +28,7 @@ class TaskOrder(Mode):
         old_task_position = presenter.view.input_message()
         presenter.view.print_message(Messages.SELECT_POSITION.value)
         new_task_position = presenter.view.input_message()
-        presenter.model.change_task_position(tasks, old_task_position, new_task_position)
+        presenter.model.change_task_position(int(old_task_position) - 1, int(new_task_position) - 1)
     
     @staticmethod
     def parse_tasks(tasks: list[Task]) -> str:

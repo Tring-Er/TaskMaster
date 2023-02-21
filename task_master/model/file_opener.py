@@ -29,16 +29,6 @@ class FileManager(Readable, Sendable):
                 # add new line char (write this when adding a converter)
                 tasks_file.write(task.text + "\n")
 
-    def overwrite_tasks(self, tasks: list[str]) -> None:
-        """Overwrite the tasks file with the tasks list provided
-
-        Args:
-            tasks (list[str]): The tasks list to overwrite with
-        """
-
-        with open(FILE_PATH, "w", encoding="utf-8") as tasks_file:
-            tasks_file.writelines(tasks)
-
     def export_tasks(self) -> None:
         """Exports all the data from the tasks file"""
 

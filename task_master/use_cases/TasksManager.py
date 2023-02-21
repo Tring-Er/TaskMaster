@@ -35,3 +35,11 @@ class TasksManager:
     @staticmethod
     def write_tasks(tasks: list[Task], sendable: Sendable) -> None:
         sendable.send(tasks)
+    
+    @staticmethod
+    def change_oder(old_task_index: int, new_task_index: int, readable: Readable, sendable: Sendable = None):
+        if sendable is None:
+            sendable = readable
+        tasks = TasksManager.read_tasks(readable)
+        tasks[old_task_index], tasks[new_task_index] = tasks[new_task_index], tasks[old_task_index]
+        TasksManager.write_tasks(tasks, sendable)
