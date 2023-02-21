@@ -7,6 +7,8 @@ from enum import Enum
 from presenter.cli.modes.mode import Mode
 from presenter.presenter import Presenter
 from entities.Task import Task
+from use_cases.TasksManager import TasksManager
+from model.file_opener import FileManager
 
 
 class Messages(Enum):
@@ -22,9 +24,9 @@ class AddTask(Mode):
 
     @staticmethod
     def execute(presenter: Presenter) -> None:
-        presenter.view.print_message(Messages.ASK_FOR_TASK.value)
-        message = presenter.view.input_message()
-        presenter.model.add_task(AddTask.converter(message))
+        presenter.print_message(Messages.ASK_FOR_TASK.value)
+        message = presenter.input_message()
+        TasksManager.add_task(AddTask.converter(message), FileManager())
     
     @staticmethod
     def converter(text: str) -> Task:

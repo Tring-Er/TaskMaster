@@ -5,6 +5,8 @@ from enum import Enum
 from presenter.cli.modes.mode import Mode
 from presenter.presenter import Presenter
 from entities.Task import Task
+from use_cases.TasksManager import TasksManager
+from model.file_opener import FileManager
 
 
 class Messages(Enum):
@@ -21,14 +23,15 @@ class TaskOrder(Mode):
 
     @staticmethod
     def execute(presenter: Presenter) -> None:
-        tasks = presenter.model.get_saved_tasks()
+        file_manager = FileManager()
+        tasks = TasksManager.read_tasks(file_manager)
         parsed_tasks = TaskOrder.parse_tasks(tasks)
-        presenter.view.print_message(parsed_tasks)
-        presenter.view.print_message(Messages.SELECT_TASK_TO_MOVE.value)
-        old_task_position = presenter.view.input_message()
-        presenter.view.print_message(Messages.SELECT_POSITION.value)
-        new_task_position = presenter.view.input_message()
-        presenter.model.change_task_position(int(old_task_position) - 1, int(new_task_position) - 1)
+        presenter.print_message(parsed_tasks)
+        presenter.print_message(Messages.SELECT_TASK_TO_MOVE.value)
+        old_task_index = int(presenter.input_message()) - 1
+        presenter.print_message(Messages.SELECT_POSITION.value)
+        new_task_index = int(presenter.input_message()) - 1
+        TasksManager.change_oder(old_task_index, new_task_index, file_manager)
     
     @staticmethod
     def parse_tasks(tasks: list[Task]) -> str:

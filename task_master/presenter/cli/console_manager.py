@@ -2,10 +2,8 @@
 
 from enum import Enum
 
-from model.task_manager import TaskManager
 from presenter.presenter import Presenter
 from presenter.cli.modes import MODES, Mode
-from view.cli import CLI
 
 
 class Messages(Enum):
@@ -16,13 +14,24 @@ class Messages(Enum):
 
 class ConsoleManager(Presenter):
     """A presenter for a view and model"""
+    
+    def print_message(self, message: str) -> None:
+        """It prints the message on the console
 
-    def __init__(self, model: TaskManager, view: CLI) -> None:
-        self.model = model
-        self.view = view
+        Args:
+            message (str): the message to print
+        """
+        print(message)
 
-    @staticmethod
-    def __get_modes_simbols() -> str:
+    def input_message(self) -> str:
+        """Return the input passed in the console
+
+        Returns:
+            str: The string inserted by user
+        """
+        return input()
+
+    def get_modes_simbols(self) -> str:
         """Returns all the MODES symbols (the string paired with the mode) excluding the InvalidMode
 
         Returns:
@@ -38,9 +47,9 @@ class ConsoleManager(Presenter):
     def compute(self) -> None:
         """Make the program run"""
 
-        modes_symbols = self.__get_modes_simbols()
+        modes_symbols = self.get_modes_simbols()
         while True:
-            self.view.print_message(Messages.CHOOSE_MODE.value.format(modes_symbols))
-            input_mode = self.view.input_message()
+            self.print_message(Messages.CHOOSE_MODE.value.format(modes_symbols))
+            input_mode = self.input_message()
             selected_mode: Mode = MODES.get(input_mode, MODES[""])
             selected_mode.execute(self)

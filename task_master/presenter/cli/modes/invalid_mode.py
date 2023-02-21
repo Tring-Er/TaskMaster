@@ -21,4 +21,4 @@ class InvalidMode(Mode):
 
     @staticmethod
     def execute(presenter: Presenter) -> None:
-        presenter.view.print_message(Messages.INVALID_MODE_SELECTED.value)
+        presenter.print_message(Messages.INVALID_MODE_SELECTED.value)

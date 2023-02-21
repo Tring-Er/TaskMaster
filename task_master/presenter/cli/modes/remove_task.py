@@ -5,6 +5,8 @@ from enum import Enum
 from presenter.cli.modes.mode import Mode
 from presenter.presenter import Presenter
 from entities.Task import Task
+from use_cases.TasksManager import TasksManager
+from model.file_opener import FileManager
 
 
 class Messages(Enum):
@@ -21,16 +23,17 @@ class RemoveTask(Mode):
 
     @staticmethod
     def execute(presenter: Presenter) -> None:
-        tasks = presenter.model.get_saved_tasks()
+        file_manager = FileManager()
+        tasks = TasksManager.read_tasks(file_manager)
         parsed_tasks = RemoveTask.parse_tasks(tasks)
-        presenter.view.print_message(parsed_tasks)
-        presenter.view.print_message(Messages.SELECT_TASK_TO_REMOVE.value)
-        task_number_to_remove = presenter.view.input_message()
+        presenter.print_message(parsed_tasks)
+        presenter.print_message(Messages.SELECT_TASK_TO_REMOVE.value)
+        task_number_to_remove = presenter.input_message()
         task_index_to_remove = int(task_number_to_remove) - 1
         try:
-            error = presenter.model.remove_task(tasks[task_index_to_remove])
+            TasksManager.remove_task(tasks[task_index_to_remove], file_manager)
         except IndexError:
-            presenter.view.print_message(Messages.NO_NUMBER_FOUND.value)
+            presenter.print_message(Messages.NO_NUMBER_FOUND.value)
     
     @staticmethod
     def parse_tasks(tasks: list[Task]) -> str:

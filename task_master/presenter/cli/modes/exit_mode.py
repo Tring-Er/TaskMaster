@@ -20,5 +20,5 @@ class ExitMode(Mode):
 
     @staticmethod
     def execute(presenter: Presenter) -> None:
-        presenter.view.print_message(Messages.EXIT_MESSAGE.value)
+        presenter.print_message(Messages.EXIT_MESSAGE.value)
         sys_exit(0)

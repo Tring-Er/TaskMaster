@@ -5,6 +5,8 @@ from enum import Enum
 from presenter.presenter import Presenter
 from presenter.cli.modes.mode import Mode
 from entities.Task import Task
+from use_cases.TasksManager import TasksManager
+from model.file_opener import FileManager
 
 
 class Messages(Enum):
@@ -18,9 +20,9 @@ class ReadTasks(Mode):
 
     @staticmethod
     def execute(presenter: Presenter) -> None:
-        tasks_list = presenter.model.get_saved_tasks()
+        tasks_list = TasksManager.read_tasks(FileManager())
         tasks_formatted_string = ReadTasks.parse_tasks(tasks_list)
-        presenter.view.print_message(tasks_formatted_string)
+        presenter.print_message(tasks_formatted_string)
     
     @staticmethod
     def parse_tasks(tasks: list[Task]) -> str:

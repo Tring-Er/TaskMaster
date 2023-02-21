@@ -22,4 +22,4 @@ class ExportTasks(Mode):
     def execute(presenter: Presenter) -> None:
         file_manager = FileManager()
         file_manager.export_tasks()
-        presenter.view.print_message(Messages.TASKS_EXPORTED.value)
+        presenter.print_message(Messages.TASKS_EXPORTED.value)

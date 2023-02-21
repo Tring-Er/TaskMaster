@@ -36,16 +36,3 @@ class FileManager(Readable, Sendable):
             file_content = file_tasks.readlines()
         with open(EXPORT_FILE_PATH, "w", encoding="utf-8") as export_file:
             export_file.writelines(file_content)
-
-
-def create_file_manager() -> FileManager:
-    """Create an instance of the FileOpener class
-
-    Args:
-        file_path (str): Path to pass to the FileOpener init
-
-    Returns:
-        FileOpener: FileOpener instance
-    """
-
-    return FileManager()
