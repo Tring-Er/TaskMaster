@@ -1,1 +1,0 @@
-"""View according to MVP"""
