@@ -1,5 +1,3 @@
-"""Start of project"""
-
 from presenter.cli.console_manager import ConsoleManager
 
 
