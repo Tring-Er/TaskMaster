@@ -8,7 +8,7 @@ from presenter.cli.modes.mode import Mode
 from presenter.presenter import Presenter
 from entities.Task import Task
 from use_cases.TasksManager import TasksManager
-from model.file_opener import FileManager
+from details.TextFile import TextFile
 
 
 class Messages(Enum):
@@ -26,7 +26,7 @@ class AddTask(Mode):
     def execute(presenter: Presenter) -> None:
         presenter.print_message(Messages.ASK_FOR_TASK.value)
         message = presenter.input_message()
-        TasksManager.add_task(AddTask.converter(message), FileManager())
+        TasksManager.add_task(AddTask.converter(message), TextFile())
     
     @staticmethod
     def converter(text: str) -> Task:

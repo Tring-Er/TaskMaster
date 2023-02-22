@@ -6,7 +6,7 @@ from presenter.presenter import Presenter
 from presenter.cli.modes.mode import Mode
 from entities.Task import Task
 from use_cases.TasksManager import TasksManager
-from model.file_opener import FileManager
+from details.TextFile import TextFile
 
 
 class Messages(Enum):
@@ -20,7 +20,7 @@ class ReadTasks(Mode):
 
     @staticmethod
     def execute(presenter: Presenter) -> None:
-        tasks_list = TasksManager.read_tasks(FileManager())
+        tasks_list = TasksManager.read_tasks(TextFile())
         tasks_formatted_string = ReadTasks.parse_tasks(tasks_list)
         presenter.print_message(tasks_formatted_string)
     
