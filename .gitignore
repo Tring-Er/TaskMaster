@@ -1,4 +1,4 @@
 .vscode/
 **/__pycache__/
-task_master/model/tasks.txt
-task_master/model/exported_tasks.txt
+task_master/details/tasks.txt
+task_master/details/exported_tasks.txt
