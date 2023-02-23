@@ -1,19 +1,16 @@
 """This file contains an object to use txt files to store and read from it"""
 
 
-from os import getcwd
-import sys
+import os
 
 from use_cases.external_interfaces.Readable import Readable
 from use_cases.external_interfaces.Sendable import Sendable
 from entities.Task import Task
 
 
-DIRETORY = getcwd() + r"/task_master/details"
-if DIRETORY not in sys.path:
-    sys.path.append(DIRETORY)
-FILE_PATH = DIRETORY + r"/tasks.txt"
-EXPORT_FILE_PATH = DIRETORY + r"/exported_tasks.txt"
+FILE_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
+FILE_PATH = os.path.join(FILE_DIRECTORY, r"tasks.txt")
+EXPORT_FILE_PATH = os.path.join(FILE_DIRECTORY, r"exported_tasks.txt")
 
 
 class TextFile(Readable, Sendable):
