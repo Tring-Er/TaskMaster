@@ -2,6 +2,7 @@
 
 
 from os import getcwd
+import sys
 
 from use_cases.external_interfaces.Readable import Readable
 from use_cases.external_interfaces.Sendable import Sendable
@@ -9,6 +10,8 @@ from entities.Task import Task
 
 
 DIRETORY = getcwd() + r"/task_master/details"
+if DIRETORY not in sys.path:
+    sys.path.append(DIRETORY)
 FILE_PATH = DIRETORY + r"/tasks.txt"
 EXPORT_FILE_PATH = DIRETORY + r"/exported_tasks.txt"
 
