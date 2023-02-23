@@ -14,6 +14,13 @@ EXPORT_FILE_PATH = DIRETORY + r"/exported_tasks.txt"
 
 
 class TextFile(Readable, Sendable):
+
+    def __init__(self) -> None:
+        self.create_file_if_not_present()
+    
+    def create_file_if_not_present(self) -> None:
+        with open(FILE_PATH, "w", encoding="utf-8"):
+            ...
     
     def read(self) -> list[Task]:
         tasks = []
