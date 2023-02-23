@@ -9,6 +9,14 @@ from entities.Task import Task
 
 
 class TasksManager:
+
+    @staticmethod
+    def read_tasks(readable: Readable) -> list[Task]:
+        return readable.read()
+    
+    @staticmethod
+    def write_tasks(tasks: list[Task], sendable: Sendable) -> None:
+        sendable.send(tasks)
     
     @staticmethod
     def add_task(task: Task, sendable: Sendable, readable: Readable = None) -> None:
@@ -29,17 +37,21 @@ class TasksManager:
         TasksManager.write_tasks(tasks, sendable)
     
     @staticmethod
-    def read_tasks(readable: Readable) -> list[Task]:
-        return readable.read()
-    
-    @staticmethod
-    def write_tasks(tasks: list[Task], sendable: Sendable) -> None:
-        sendable.send(tasks)
-    
-    @staticmethod
     def change_oder(old_task_index: int, new_task_index: int, readable: Readable, sendable: Sendable = None):
         if sendable is None:
             sendable = readable
         tasks = TasksManager.read_tasks(readable)
         tasks[old_task_index], tasks[new_task_index] = tasks[new_task_index], tasks[old_task_index]
+        TasksManager.write_tasks(tasks, sendable)
+    
+    @staticmethod
+    def mark_tasks_as_completed(tasks: list[Task], sendable: Sendable) -> None:
+        for task in tasks:
+            task.complete()
+        TasksManager.write_tasks(tasks, sendable)
+    
+    @staticmethod
+    def mark_tasks_as_not_compelted(tasks: list[Task], sendable: Sendable) -> None:
+        for task in tasks:
+            task.uncomplete()
         TasksManager.write_tasks(tasks, sendable)

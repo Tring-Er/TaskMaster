@@ -24,7 +24,13 @@ class Messages(Enum):
 
 class Console(Readable, Sendable):
 
-    LOCAL_SYMBOLS = ["add task", "exit", "export tasks", "", "read tasks", "remove task", "task order"]  # convert to set
+    LOCAL_SYMBOLS = ["add task",
+                     "exit",
+                     "export tasks",
+                     "",
+                     "read tasks",
+                     "remove task",
+                     "task order"]  # TODO convert to set
     
     def read(self) -> list[Task]:
         message = self.input_message()

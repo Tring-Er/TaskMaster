@@ -1,6 +1,6 @@
 """This file contains a Task object that represent a task inside the program
 
-For now I supose that the text is unique for each Task (like an ID)
+For the moment I supose that the text is unique for each Task (like an ID)
 """
 
 class Task:
