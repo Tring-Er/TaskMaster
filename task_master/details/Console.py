@@ -1,13 +1,11 @@
-"""This class contains the presenter and messages (strings constants) used by the presenter"""
-
 from enum import Enum
 from sys import exit as sys_exit
 
+from details.TextFile import TextFile
 from use_cases.external_interfaces.Readable import Readable
 from use_cases.external_interfaces.Sendable import Sendable
-from entities.Task import Task
 from use_cases.TasksManager import TasksManager
-from details.TextFile import TextFile
+from entities.Task import Task
 
 
 class Messages(Enum):
@@ -24,24 +22,23 @@ class Messages(Enum):
     SELECT_POSITION = "Select the position to move the task to"
 
 
-class ConsoleManager(Readable, Sendable):
-    """REFACTORING, DO NOT WORK ON THIS"""
+class Console(Readable, Sendable):
 
     LOCAL_SYMBOLS = ["add task", "exit", "export tasks", "", "read tasks", "remove task", "task order"]  # convert to set
     
     def read(self) -> list[Task]:
         message = self.input_message()
-        return [self.text_to_task(message)]
+        return [self.str_to_task(message)]
     
     def send(self, tasks: list[Task]) -> None:
         for task_index, task in enumerate(tasks, 1):
-            message = f"{task_index}- {self.task_to_text(task)}"
+            message = f"{task_index}- {self.task_to_str(task)}"
             self.print_message(message)
     
-    def text_to_task(self, text: str) -> Task:
+    def str_to_task(self, text: str) -> Task:
         return Task(text)
     
-    def task_to_text(self, task: Task) -> str:
+    def task_to_str(self, task: Task) -> str:
         return task.text
     
     def print_message(self, message: str) -> None:
@@ -51,7 +48,7 @@ class ConsoleManager(Readable, Sendable):
             message (str): the message to print
         """
         print(message)
-
+    
     def input_message(self) -> str:
         """Return the input passed in the console
 
@@ -59,14 +56,8 @@ class ConsoleManager(Readable, Sendable):
             str: The string inserted by user
         """
         return input()
-
-    def get_modes_simbols(self) -> str:
-        modes_symbols = self.LOCAL_SYMBOLS
-        modes_symbols.remove("")
-        parsed_modes_symbols = "/".join(modes_symbols)
-        return parsed_modes_symbols
-
-    def compute(self) -> None:
+    
+    def run(self) -> None:
         """Make the program run"""
 
         modes_symbols = self.get_modes_simbols()
@@ -88,11 +79,17 @@ class ConsoleManager(Readable, Sendable):
                     self.task_order()
                 case _:
                     self.invalid_mode()
-
+    
+    def get_modes_simbols(self) -> str:
+        modes_symbols = self.LOCAL_SYMBOLS[:]
+        modes_symbols.remove("")
+        parsed_modes_symbols = "/".join(modes_symbols)
+        return parsed_modes_symbols
+    
     def add_task(self) -> None:
         self.print_message(Messages.ASK_FOR_TASK.value)
         message = self.input_message()
-        TasksManager.add_task(self.text_to_task(message), TextFile())
+        TasksManager.add_task(self.str_to_task(message), TextFile())
     
     def exit(self) -> None:
         self.print_message(Messages.EXIT_MESSAGE.value)
