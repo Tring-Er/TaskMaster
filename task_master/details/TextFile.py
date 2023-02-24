@@ -19,7 +19,7 @@ class TextFile(Readable, Sendable):
         self.create_file_if_not_present()
     
     def create_file_if_not_present(self) -> None:
-        with open(FILE_PATH, "w", encoding="utf-8"):
+        with open(FILE_PATH, "a", encoding="utf-8"):
             ...
     
     def read(self) -> list[Task]:
