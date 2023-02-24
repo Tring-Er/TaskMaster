@@ -11,6 +11,7 @@ from entities.Task import Task
 CURRENT_DIRECTORY_PATH = os.path.dirname(os.path.abspath(__file__))
 FILE_PATH = os.path.join(CURRENT_DIRECTORY_PATH, r"tasks.txt")
 EXPORT_FILE_PATH = os.path.join(CURRENT_DIRECTORY_PATH, r"exported_tasks.txt")
+_COMPLETED_LABEL = " COMPLETED"
 
 
 class TextFile(Readable, Sendable):
@@ -45,7 +46,12 @@ class TextFile(Readable, Sendable):
     
     def text_to_task(self, text: str) -> Task:
         parsed_task_text = text.replace("\n", "")
+        if parsed_task_text.endswith(_COMPLETED_LABEL):
+            task_text = parsed_task_text.replace(_COMPLETED_LABEL, "")
+            return Task(task_text, True)
         return Task(parsed_task_text)
     
     def task_to_text(self, task: Task) -> str:
+        if task.is_completed:
+            return f"{task.text}{_COMPLETED_LABEL}\n"
         return task.text + "\n"
