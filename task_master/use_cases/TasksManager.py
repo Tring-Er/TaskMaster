@@ -2,6 +2,7 @@
 from retriving them to save them
 """
 
+from typing import Callable
 
 from use_cases.external_interfaces.Sendable import Sendable
 from use_cases.external_interfaces.Readable import Readable
@@ -53,7 +54,7 @@ class TasksManager:
         TasksManager.mark_task_as(TasksManager.not_completed, task, readable, sendable)
     
     @staticmethod
-    def mark_task_as(option: callable[Task, None], task: Task, readable: Readable, sendable: Sendable = None) -> None:
+    def mark_task_as(option: Callable[[Task], None], task: Task, readable: Readable, sendable: Sendable = None) -> None:
         if sendable is None:
             sendable = readable
         tasks = readable.read()

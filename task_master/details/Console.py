@@ -24,13 +24,36 @@ class Messages(Enum):
 
 class Console(Readable, Sendable):
 
-    LOCAL_SYMBOLS = ["add task",
+    LOCAL_SYMBOLS = {"add task",
                      "exit",
                      "export tasks",
                      "",
                      "read tasks",
                      "remove task",
-                     "task order"]  # TODO convert to set
+                     "task order"}
+    
+    def run(self) -> None:
+        """Make the program run"""
+
+        modes_symbols = self.get_modes_simbols()
+        while True:
+            self.print_message(Messages.CHOOSE_MODE.value.format(modes_symbols))
+            selected_mode = self.input_message()
+            match selected_mode:
+                case "add task":
+                    self.add_task()
+                case "exit":
+                    self.exit()
+                case "export tasks":
+                    self.export_tasks()
+                case "read tasks":
+                    self.read_tasks()
+                case "remove task":
+                    self.remove_task()
+                case "task order":
+                    self.task_order()
+                case _:
+                    self.invalid_mode()
     
     def read(self) -> list[Task]:
         message = self.input_message()
@@ -63,31 +86,8 @@ class Console(Readable, Sendable):
         """
         return input()
     
-    def run(self) -> None:
-        """Make the program run"""
-
-        modes_symbols = self.get_modes_simbols()
-        while True:
-            self.print_message(Messages.CHOOSE_MODE.value.format(modes_symbols))
-            selected_mode = self.input_message()
-            match selected_mode:
-                case "add task":
-                    self.add_task()
-                case "exit":
-                    self.exit()
-                case "export tasks":
-                    self.export_tasks()
-                case "read tasks":
-                    self.read_tasks()
-                case "remove task":
-                    self.remove_task()
-                case "task order":
-                    self.task_order()
-                case _:
-                    self.invalid_mode()
-    
     def get_modes_simbols(self) -> str:
-        modes_symbols = self.LOCAL_SYMBOLS[:]
+        modes_symbols = self.LOCAL_SYMBOLS.copy()
         modes_symbols.remove("")
         parsed_modes_symbols = "/".join(modes_symbols)
         return parsed_modes_symbols
