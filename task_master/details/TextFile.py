@@ -8,9 +8,9 @@ from use_cases.external_interfaces.Sendable import Sendable
 from entities.Task import Task
 
 
-FILE_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
-FILE_PATH = os.path.join(FILE_DIRECTORY, r"tasks.txt")
-EXPORT_FILE_PATH = os.path.join(FILE_DIRECTORY, r"exported_tasks.txt")
+CURRENT_DIRECTORY_PATH = os.path.dirname(os.path.abspath(__file__))
+FILE_PATH = os.path.join(CURRENT_DIRECTORY_PATH, r"tasks.txt")
+EXPORT_FILE_PATH = os.path.join(CURRENT_DIRECTORY_PATH, r"exported_tasks.txt")
 
 
 class TextFile(Readable, Sendable):

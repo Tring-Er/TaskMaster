@@ -45,13 +45,27 @@ class TasksManager:
         TasksManager.write_tasks(tasks, sendable)
     
     @staticmethod
-    def mark_tasks_as_completed(tasks: list[Task], sendable: Sendable) -> None:
-        for task in tasks:
-            task.complete()
-        TasksManager.write_tasks(tasks, sendable)
+    def mark_task_as_completed(task: Task, readable: Readable, sendable: Sendable = None) -> None:
+        TasksManager.mark_task_as(TasksManager.complete, task, readable, sendable)
     
     @staticmethod
-    def mark_tasks_as_not_compelted(tasks: list[Task], sendable: Sendable) -> None:
-        for task in tasks:
-            task.uncomplete()
-        TasksManager.write_tasks(tasks, sendable)
+    def mark_task_as_not_completed(task: Task, readable: Readable, sendable: Sendable = None) -> None:
+        TasksManager.mark_task_as(TasksManager.not_completed, task, readable, sendable)
+    
+    @staticmethod
+    def mark_task_as(option: callable[Task, None], task: Task, readable: Readable, sendable: Sendable = None) -> None:
+        if sendable is None:
+            sendable = readable
+        tasks = readable.read()
+        for _task in tasks:
+            if _task.text == task.text:
+                option(_task)
+        sendable.send(tasks)
+
+    @staticmethod
+    def complete(task: Task) -> None:
+        task.complete()
+
+    @staticmethod
+    def not_completed(task: Task) -> None:
+        task.uncomplete()
