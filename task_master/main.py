@@ -1,9 +1,15 @@
 from details.Console import Console
+from details.GUI import GUI
 
 
 def main() -> None:
-    presenter = Console()
-    presenter.run()
+    gui_mode = False
+    if gui_mode:
+        gui = GUI()
+        gui.run()
+    else:
+        console = Console()
+        console.run()
 
 
 if __name__ == "__main__":
