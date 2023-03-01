@@ -147,7 +147,7 @@ class Console(Readable, Sendable):
         old_task_index = int(self.input_message()) - 1
         self.print_message(Messages.SELECT_POSITION.value)
         new_task_index = int(self.input_message()) - 1
-        TasksManager.change_oder(old_task_index, new_task_index, self.file_manager)
+        TasksManager.change_order(old_task_index, new_task_index, self.file_manager)
     
     def set_task_as_completed(self) -> None:
         tasks = TasksManager.read_tasks(self.file_manager)

@@ -38,12 +38,24 @@ class TasksManager:
         TasksManager.write_tasks(tasks, sendable)
     
     @staticmethod
-    def change_oder(old_task_index: int, new_task_index: int, readable: Readable, sendable: Sendable = None):
+    def change_order(old_task_index: int, new_task_index: int, readable: Readable, sendable: Sendable = None) -> None:
         if sendable is None:
             sendable = readable
         tasks = TasksManager.read_tasks(readable)
         tasks[old_task_index], tasks[new_task_index] = tasks[new_task_index], tasks[old_task_index]
         TasksManager.write_tasks(tasks, sendable)
+    
+    @staticmethod
+    def change_task_order(task_to_move: Task, task_to_leave: Task, readable: Readable, sendable: Sendable = None) -> None:
+        tasks = TasksManager.read_tasks(readable)
+        task_to_move_index = None
+        task_to_leave_index = None
+        for task_index, task in enumerate(tasks):
+            if task_to_move.text == task.text:
+                task_to_move_index = task_index
+            if task_to_leave.text == task.text:
+                task_to_leave_index = task_index
+        TasksManager.change_order(task_to_move_index, task_to_leave_index, readable, sendable)
     
     @staticmethod
     def mark_task_as_completed(task: Task, readable: Readable, sendable: Sendable = None) -> None:
