@@ -82,3 +82,10 @@ class TasksManager:
     @staticmethod
     def not_completed(task: Task) -> None:
         task.uncomplete()
+    
+    @staticmethod
+    def get_task(task: str | Task, readable: Readable) -> Task | None:
+        tasks = readable.read()
+        for _task in tasks:
+            if task.text == _task.text:
+                return _task

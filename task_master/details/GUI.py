@@ -19,7 +19,7 @@ class Messages(Enum):
     ADD_TASK_BUTTON = "Add task"
     REMOVE_TASK_BUTTON = "Remove task"
     ORDER_TASK_BUTTON = "Order task"
-    READ_MODE_BUTTON = "Read only mode"
+    COMPLETE_OR_UNCOMPLETE_BUTTON = "Complete/Uncomplete"
     EXPORT_BUTTON = "Export"
     LIGHT_MODE_BUTTON = "Light"
     DARK_MODE_BUTTON = "Dark"
@@ -90,8 +90,12 @@ class GUI(Sendable, Readable):
         self._order_task_button = Button(self._homepage,
                                          text=Messages.ORDER_TASK_BUTTON.value,
                                          command=self.change_order)
-        self._read_mode_button = Button(self._homepage, text=Messages.READ_MODE_BUTTON.value)
-        self._export_tasks_button = Button(self._homepage, text=Messages.EXPORT_BUTTON.value)
+        self._complete_or_uncomplete_task = Button(self._homepage,
+                                                   text=Messages.COMPLETE_OR_UNCOMPLETE_BUTTON.value,
+                                                   command=self.complete_on_uncomplete_task)
+        self._export_tasks_button = Button(self._homepage,
+                                           text=Messages.EXPORT_BUTTON.value,
+                                           command=self.export_tasks)
         self._quit_button = Button(self._homepage,
                              text=Messages.EXIT_BUTTON_TEXT.value,
                              command=self.program_exit)
@@ -103,7 +107,7 @@ class GUI(Sendable, Readable):
         self._add_task_button.pack()
         self._remove_task_button.pack()
         self._order_task_button.pack()
-        self._read_mode_button.pack()
+        self._complete_or_uncomplete_task.pack()
         self._export_tasks_button.pack()
         self._task_box.pack()
         self._tasks_list.pack()
@@ -139,5 +143,18 @@ class GUI(Sendable, Readable):
                 TasksManager.change_task_order(GUI.task_to_move, task, self._text_file)
                 GUI.task_to_move = None
                 self.send(self._text_file.read())
+                return
             GUI.task_to_move = task
-            
+    
+    def export_tasks(self) -> None:
+        self._text_file.export_tasks()
+    
+    def complete_on_uncomplete_task(self) -> None:
+        task = self._get_task_from_task_box()
+        task = TasksManager.get_task(task, self._text_file)
+        if task is not None:
+            if task.is_completed:
+                TasksManager.mark_task_as_not_completed(task, self._text_file)
+            if not task.is_completed:
+                TasksManager.mark_task_as_completed(task, self._text_file)
+            self.send(self._text_file.read())
