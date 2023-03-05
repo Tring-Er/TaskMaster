@@ -1,7 +1,7 @@
 from enum import Enum
 from sys import exit as sys_exit
 
-from tkinter import Tk, Button, Label, Text, END
+from tkinter import Tk, Button, Label, Text, Frame, END
 
 from use_cases.external_interfaces.Readable import Readable
 from use_cases.external_interfaces.Sendable import Sendable
@@ -78,42 +78,66 @@ class GUI(Sendable, Readable):
     
     def _create_widjets(self) -> None:
         title_font = ("San-Serif", 25)
-        self._task_box = Text(self._homepage, height=1, width=25)
-        self._title = Label(self._homepage, text=Messages.PROJECT_TITLE.value, font=title_font)
-        self._tasks_list = Label(self._homepage)
-        self._add_task_button = Button(self._homepage,
+        self._title_frame = Frame(self._homepage, bg="#421C6F")
+        self._options_frame = Frame(self._homepage, bg="#9562C4")
+        self._tasks_frame = Frame(self._homepage)
+        self._color_mode_frame = Frame(self._options_frame, bg="#9562C4")
+        self._task_box = Text(self._tasks_frame, height=1, width=25)
+        self._title = Label(self._title_frame,
+                            text=Messages.PROJECT_TITLE.value,
+                            font=title_font,
+                            bg="#421C6F",
+                            fg="white")
+        self._tasks_list = Label(self._tasks_frame)
+        self._add_task_button = Button(self._options_frame,
                                        text=Messages.ADD_TASK_BUTTON.value,
-                                       command=self.add_task)
-        self._remove_task_button = Button(self._homepage,
+                                       command=self.add_task,
+                                       bg="#9562C4",
+                                       fg="white")
+        self._remove_task_button = Button(self._options_frame,
                                           text=Messages.REMOVE_TASK_BUTTON.value,
-                                          command=self.remove_task)
-        self._order_task_button = Button(self._homepage,
+                                          command=self.remove_task,
+                                          bg="#9562C4",
+                                          fg="white")
+        self._order_task_button = Button(self._options_frame,
                                          text=Messages.ORDER_TASK_BUTTON.value,
-                                         command=self.change_order)
-        self._complete_or_uncomplete_task = Button(self._homepage,
+                                         command=self.change_order,
+                                         bg="#9562C4",
+                                         fg="white")
+        self._complete_or_uncomplete_task = Button(self._options_frame,
                                                    text=Messages.COMPLETE_OR_UNCOMPLETE_BUTTON.value,
-                                                   command=self.complete_on_uncomplete_task)
-        self._export_tasks_button = Button(self._homepage,
+                                                   command=self.complete_on_uncomplete_task,
+                                                   bg="#9562C4",
+                                                   fg="white")
+        self._export_tasks_button = Button(self._options_frame,
                                            text=Messages.EXPORT_BUTTON.value,
-                                           command=self.export_tasks)
-        self._quit_button = Button(self._homepage,
+                                           command=self.export_tasks,
+                                           bg="#9562C4",
+                                           fg="white")
+        self._quit_button = Button(self._options_frame,
                              text=Messages.EXIT_BUTTON_TEXT.value,
-                             command=self.program_exit)
-        self._light_mode = Button(self._homepage, text=Messages.LIGHT_MODE_BUTTON.value)
-        self._dark_mode = Button(self._homepage, text=Messages.DARK_MODE_BUTTON.value)
+                             command=self.program_exit,
+                             bg="#9562C4",
+                             fg="white")
+        self._light_mode = Button(self._color_mode_frame, text=Messages.LIGHT_MODE_BUTTON.value)
+        self._dark_mode = Button(self._color_mode_frame, text=Messages.DARK_MODE_BUTTON.value)
     
     def _show_widjets(self) -> None:
-        self._title.pack()
-        self._add_task_button.pack()
-        self._remove_task_button.pack()
-        self._order_task_button.pack()
-        self._complete_or_uncomplete_task.pack()
-        self._export_tasks_button.pack()
-        self._task_box.pack()
+        self._title_frame.pack(side="top", fill="x")
+        self._options_frame.pack(side="left", fill="y")
+        self._tasks_frame.pack(side="left", fill="both")
+        self._color_mode_frame.pack(side="bottom", fill="x")
+        self._title.pack(side="left")
+        self._add_task_button.pack(fill="x")
+        self._remove_task_button.pack(fill="x")
+        self._order_task_button.pack(fill="x")
+        self._complete_or_uncomplete_task.pack(fill="x")
+        self._export_tasks_button.pack(fill="x")
+        self._task_box.pack(fill="x")
         self._tasks_list.pack()
-        self._quit_button.pack()
-        self._light_mode.pack()
-        self._dark_mode.pack()
+        self._quit_button.pack(side="bottom", fill="x")
+        self._light_mode.pack(side="left", fill="x")
+        self._dark_mode.pack(side="right", fill="x")
     
     def _get_task_from_task_box(self) -> Task | None:
         task_text = self._task_box.get("1.0", END).replace("\n", "")
