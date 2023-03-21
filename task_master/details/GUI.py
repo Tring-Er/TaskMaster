@@ -74,7 +74,6 @@ class GUI(Sendable, Readable):
         y_coord = int(screen_height/2) - int(window_height/2)
         centered_geometry = f"{window_width}x{window_height}+{x_coord}+{y_coord}"
         self._homepage.geometry(centered_geometry)
-        self._homepage.attributes("-type", "splash")
     
     def _create_widjets(self) -> None:
         title_font = ("San-Serif", 25)
