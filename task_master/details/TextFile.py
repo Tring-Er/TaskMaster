@@ -6,11 +6,11 @@ import os
 from use_cases.external_interfaces.Readable import Readable
 from use_cases.external_interfaces.Sendable import Sendable
 from entities.Task import Task
+from Loader import TASKS_FOLDER
 
 
-CURRENT_DIRECTORY_PATH = os.path.dirname(os.path.abspath(__file__))
-FILE_PATH = os.path.join(CURRENT_DIRECTORY_PATH, r"tasks.txt")
-EXPORT_FILE_PATH = os.path.join(CURRENT_DIRECTORY_PATH, r"exported_tasks.txt")
+TASKS_FILE_PATH = os.path.join(TASKS_FOLDER, r"tasks.txt")
+EXPORTED_TASKS_FILE_PATH = os.path.join(TASKS_FOLDER, r"exported_tasks.txt")
 _COMPLETED_LABEL = " COMPLETED"
 
 
@@ -20,18 +20,18 @@ class TextFile(Readable, Sendable):
         self.create_file_if_not_present()
     
     def create_file_if_not_present(self) -> None:
-        with open(FILE_PATH, "a", encoding="utf-8"):
+        with open(TASKS_FILE_PATH, "a", encoding="utf-8"):
             ...
     
     def read(self) -> list[Task]:
         tasks = []
-        with open(FILE_PATH, "r", encoding="utf-8") as tasks_file:
+        with open(TASKS_FILE_PATH, "r", encoding="utf-8") as tasks_file:
             for task_line in tasks_file.readlines():
                 tasks.append(self.text_to_task(task_line))
         return tasks
     
     def send(self, tasks: list[Task]) -> None:
-        with open(FILE_PATH, "w", encoding="utf-8") as tasks_file:
+        with open(TASKS_FILE_PATH, "w", encoding="utf-8") as tasks_file:
             for task in tasks:
                 task_text = self.task_to_text(task)
                 tasks_file.write(task_text)
@@ -39,9 +39,9 @@ class TextFile(Readable, Sendable):
     def export_tasks(self) -> None:
         """Exports all the data from the tasks file"""
 
-        with open(FILE_PATH, "r", encoding="utf-8") as file_tasks:
+        with open(TASKS_FILE_PATH, "r", encoding="utf-8") as file_tasks:
             file_content = file_tasks.readlines()
-        with open(EXPORT_FILE_PATH, "w", encoding="utf-8") as export_file:
+        with open(EXPORTED_TASKS_FILE_PATH, "w", encoding="utf-8") as export_file:
             export_file.writelines(file_content)
     
     def text_to_task(self, text: str) -> Task:

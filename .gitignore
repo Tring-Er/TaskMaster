@@ -1,4 +1,5 @@
 .vscode/
 **/__pycache__/
-task_master/details/tasks.txt
-task_master/details/exported_tasks.txt
+task_master/build/
+task_master/dist/
+task_master/main.spec
