@@ -2,12 +2,14 @@ from enum import Enum
 from sys import exit as sys_exit
 
 from tkinter import Tk, Button, Label, Text, Frame, END
+from tkinter.font import Font
 
 from use_cases.external_interfaces.Readable import Readable
 from use_cases.external_interfaces.Sendable import Sendable
 from entities.Task import Task
 from details.TextFile import TextFile
 from use_cases.TasksManager import TasksManager
+from Loader import Loader
 
 
 class Messages(Enum):
@@ -76,7 +78,7 @@ class GUI(Sendable, Readable):
         self._homepage.geometry(centered_geometry)
     
     def _create_widjets(self) -> None:
-        title_font = ("San-Serif", 25)
+        title_font = Font(family="Nexa Rust Slab Black Shadow 01", size=25)
         self._title_frame = Frame(self._homepage, bg="#421C6F")
         self._options_frame = Frame(self._homepage, bg="#9562C4")
         self._tasks_frame = Frame(self._homepage)

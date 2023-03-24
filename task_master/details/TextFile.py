@@ -6,11 +6,11 @@ import os
 from use_cases.external_interfaces.Readable import Readable
 from use_cases.external_interfaces.Sendable import Sendable
 from entities.Task import Task
-from Loader import TASKS_FOLDER
+from Loader import TASKS_FOLDER_PATH
 
 
-TASKS_FILE_PATH = os.path.join(TASKS_FOLDER, r"tasks.txt")
-EXPORTED_TASKS_FILE_PATH = os.path.join(TASKS_FOLDER, r"exported_tasks.txt")
+TASKS_FILE_PATH = os.path.join(TASKS_FOLDER_PATH, r"tasks.txt")
+EXPORTED_TASKS_FILE_PATH = os.path.join(TASKS_FOLDER_PATH, r"exported_tasks.txt")
 _COMPLETED_LABEL = " COMPLETED"
 
 
