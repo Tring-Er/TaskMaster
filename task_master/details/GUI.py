@@ -9,7 +9,6 @@ from use_cases.external_interfaces.Sendable import Sendable
 from entities.Task import Task
 from details.TextFile import TextFile
 from use_cases.TasksManager import TasksManager
-from Loader import Loader
 
 
 class Messages(Enum):
