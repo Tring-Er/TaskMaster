@@ -78,6 +78,7 @@ class GUI(Sendable, Readable):
     
     def _create_widjets(self) -> None:
         title_font = Font(family="Nexa Rust Slab Black Shadow 01", size=25)
+        buttons_font = Font(family="Helvetica", size=12)
         self._title_frame = Frame(self._homepage, bg="#421C6F")
         self._options_frame = Frame(self._homepage, bg="#9562C4")
         self._tasks_frame = Frame(self._homepage)
@@ -91,31 +92,37 @@ class GUI(Sendable, Readable):
         self._tasks_list = Label(self._tasks_frame)
         self._add_task_button = Button(self._options_frame,
                                        text=Messages.ADD_TASK_BUTTON.value,
+                                       font=buttons_font,
                                        command=self.add_task,
                                        bg="#9562C4",
                                        fg="white")
         self._remove_task_button = Button(self._options_frame,
                                           text=Messages.REMOVE_TASK_BUTTON.value,
+                                          font=buttons_font,
                                           command=self.remove_task,
                                           bg="#9562C4",
                                           fg="white")
         self._order_task_button = Button(self._options_frame,
                                          text=Messages.ORDER_TASK_BUTTON.value,
+                                         font=buttons_font,
                                          command=self.change_order,
                                          bg="#9562C4",
                                          fg="white")
         self._complete_or_uncomplete_task = Button(self._options_frame,
                                                    text=Messages.COMPLETE_OR_UNCOMPLETE_BUTTON.value,
+                                                   font=buttons_font,
                                                    command=self.complete_on_uncomplete_task,
                                                    bg="#9562C4",
                                                    fg="white")
         self._export_tasks_button = Button(self._options_frame,
                                            text=Messages.EXPORT_BUTTON.value,
+                                           font=buttons_font,
                                            command=self.export_tasks,
                                            bg="#9562C4",
                                            fg="white")
         self._quit_button = Button(self._options_frame,
                              text=Messages.EXIT_BUTTON_TEXT.value,
+                             font=buttons_font,
                              command=self.program_exit,
                              bg="#9562C4",
                              fg="white")
