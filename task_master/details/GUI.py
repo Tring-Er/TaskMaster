@@ -22,13 +22,20 @@ class Messages(Enum):
     ORDER_TASK_BUTTON = "Order task"
     COMPLETE_OR_UNCOMPLETE_BUTTON = "Complete/Uncomplete"
     EXPORT_BUTTON = "Export"
-    LIGHT_MODE_BUTTON = "Light"
-    DARK_MODE_BUTTON = "Dark"
+    LIGHT_MODE_BUTTON = "Light mode"
+    DARK_MODE_BUTTON = "Dark mode"
+
+class Themes(Enum):
+    """The possible themes used by the GUI"""
+
+    LIGHT_MODE = 1
+    DARK_MODE = 0
 
 
 class GUI(Sendable, Readable):
 
     task_to_move = None
+    current_theme = Themes.LIGHT_MODE
 
     def __init__(self) -> None:
         self._homepage = None
@@ -95,45 +102,52 @@ class GUI(Sendable, Readable):
                                        font=buttons_font,
                                        command=self.add_task,
                                        bg="#9562C4",
+                                       activebackground='#9562C4',
                                        fg="white")
         self._remove_task_button = Button(self._options_frame,
                                           text=Messages.REMOVE_TASK_BUTTON.value,
                                           font=buttons_font,
                                           command=self.remove_task,
                                           bg="#9562C4",
+                                          activebackground='#9562C4',
                                           fg="white")
         self._order_task_button = Button(self._options_frame,
                                          text=Messages.ORDER_TASK_BUTTON.value,
                                          font=buttons_font,
                                          command=self.change_order,
                                          bg="#9562C4",
+                                         activebackground='#9562C4',
                                          fg="white")
         self._complete_or_uncomplete_task = Button(self._options_frame,
                                                    text=Messages.COMPLETE_OR_UNCOMPLETE_BUTTON.value,
                                                    font=buttons_font,
                                                    command=self.complete_on_uncomplete_task,
                                                    bg="#9562C4",
+                                                   activebackground='#9562C4',
                                                    fg="white")
         self._export_tasks_button = Button(self._options_frame,
                                            text=Messages.EXPORT_BUTTON.value,
                                            font=buttons_font,
                                            command=self.export_tasks,
                                            bg="#9562C4",
+                                           activebackground='#9562C4',
                                            fg="white")
         self._quit_button = Button(self._options_frame,
                              text=Messages.EXIT_BUTTON_TEXT.value,
                              font=buttons_font,
                              command=self.program_exit,
                              bg="#9562C4",
+                             activebackground='#9562C4',
                              fg="white")
-        self._light_mode = Button(self._color_mode_frame, text=Messages.LIGHT_MODE_BUTTON.value)
-        self._dark_mode = Button(self._color_mode_frame, text=Messages.DARK_MODE_BUTTON.value)
+        self._swap_theme_button = Button(self._options_frame,
+                                  text=Messages.LIGHT_MODE_BUTTON.value,
+                                  font=buttons_font,
+                                  command=self.swap_theme_mode)
     
     def _show_widjets(self) -> None:
         self._title_frame.pack(side="top", fill="x")
         self._options_frame.pack(side="left", fill="y")
         self._tasks_frame.pack(side="left", fill="both")
-        self._color_mode_frame.pack(side="bottom", fill="x")
         self._title.pack(side="left")
         self._add_task_button.pack(fill="x")
         self._remove_task_button.pack(fill="x")
@@ -142,9 +156,8 @@ class GUI(Sendable, Readable):
         self._export_tasks_button.pack(fill="x")
         self._task_box.pack(fill="x")
         self._tasks_list.pack()
+        self._swap_theme_button.pack(side="bottom", fill="x")
         self._quit_button.pack(side="bottom", fill="x")
-        self._light_mode.pack(side="left", fill="x")
-        self._dark_mode.pack(side="right", fill="x")
     
     def _get_task_from_task_box(self) -> Task | None:
         task_text = self._task_box.get("1.0", END).replace("\n", "")
@@ -189,3 +202,26 @@ class GUI(Sendable, Readable):
             if not task.is_completed:
                 TasksManager.mark_task_as_completed(task, self._text_file)
             self.send(self._text_file.read())
+    
+    def swap_theme_mode(self) -> None:
+        is_gui_in_light_mode = self.current_theme.value
+        if is_gui_in_light_mode:
+            self.set_dark_mode()
+            self._swap_theme_button["text"] = Messages.DARK_MODE_BUTTON.value
+        else:
+            self.set_light_mode()
+            self._swap_theme_button["text"] = Messages.LIGHT_MODE_BUTTON.value
+    
+    def set_dark_mode(self) -> None:
+        self._title["fg"] = "black"
+        self._tasks_frame["bg"] = "black"
+        self._tasks_list["bg"] = "black"
+        self._tasks_list["fg"] = "white"
+        self.current_theme = Themes.DARK_MODE
+    
+    def set_light_mode(self) -> None:
+        self._title["fg"] = "white"
+        self._tasks_frame["bg"] = "#f0f0f0"
+        self._tasks_list["bg"] = "#f0f0f0"
+        self._tasks_list["fg"] = "black"
+        self.current_theme = Themes.LIGHT_MODE
