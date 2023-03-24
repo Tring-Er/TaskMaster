@@ -6,7 +6,8 @@ USER_HOME_PATH = os.path.expanduser("~")
 DOCUMENTS_PATH = os.path.join(USER_HOME_PATH, "Documents")
 TASKMASTER_FOLDER_PATH = os.path.join(DOCUMENTS_PATH, "TaskMaster")
 TASKS_FOLDER_PATH = os.path.join(TASKMASTER_FOLDER_PATH, "Tasks")
-FONT_PATH = rb"C:\Users\tring\Desktop\TaskMaster\task_master\resources\fonts\NexaRustSlab-BlackShadow01.otf"
+CURRENT_FOLDER = "\\".join(os.path.abspath(__file__).split("\\")[:-1])
+FONT_PATH = os.path.join(CURRENT_FOLDER, "resources", "fonts", "NexaRustSlab-BlackShadow01.otf")
 
 REQUIRED_FOLDERS = (TASKMASTER_FOLDER_PATH, TASKS_FOLDER_PATH)
 
@@ -34,7 +35,8 @@ class Loader:
             ...
     
     @staticmethod
-    def load_font(fontpath: str) -> None:
-        path_buffer = create_string_buffer(fontpath)
+    def load_font(font_path: str) -> None:
+        byte_font_path = bytes(font_path, "utf-8")
+        path_buffer = create_string_buffer(byte_font_path)
         flags = FR_PRIVATE | FR_NOT_ENUM
         windll.gdi32.AddFontResourceExA(byref(path_buffer), flags, 0)
