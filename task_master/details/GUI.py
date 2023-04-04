@@ -74,6 +74,7 @@ class GUI(Sendable, Readable):
     
     def _create_homepage(self, icon_path: str) -> None:
         self._homepage = Tk()
+        self._homepage.title(Messages.PROJECT_TITLE.value)
         self._homepage.iconbitmap(icon_path)
         screen_width = self._homepage.winfo_screenwidth()
         screen_height = self._homepage.winfo_screenheight()
