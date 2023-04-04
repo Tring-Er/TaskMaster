@@ -7,7 +7,7 @@ def main() -> None:
     Loader.startup()
     gui_mode = True
     if gui_mode:
-        gui = GUI()
+        gui = GUI(Loader.get_title_bar_icon())
         gui.run()
     else:
         console = Console()

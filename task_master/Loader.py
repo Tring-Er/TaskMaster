@@ -57,3 +57,7 @@ class Loader:
         else:
             CURRENT_FOLDER = os.path.abspath(os.path.dirname(__file__))
         FONT_PATH = os.path.join(CURRENT_FOLDER, "resources", "fonts", "NexaRustSlab-BlackShadow01.otf")
+    
+    @staticmethod
+    def get_title_bar_icon() -> str:
+        return os.path.join(CURRENT_FOLDER, "resources", "icons", "title_bar.ico")

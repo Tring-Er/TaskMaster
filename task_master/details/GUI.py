@@ -37,9 +37,9 @@ class GUI(Sendable, Readable):
     task_to_move = None
     current_theme = Themes.LIGHT_MODE
 
-    def __init__(self) -> None:
+    def __init__(self, icon_path: str) -> None:
         self._homepage = None
-        self._create_homepage()
+        self._create_homepage(icon_path)
         self._create_widjets()
         self._show_widjets()
         self._text_file = TextFile()
@@ -72,8 +72,9 @@ class GUI(Sendable, Readable):
         self.send(self._text_file.read())
         self._homepage.mainloop()
     
-    def _create_homepage(self) -> None:
+    def _create_homepage(self, icon_path: str) -> None:
         self._homepage = Tk()
+        self._homepage.iconbitmap(icon_path)
         screen_width = self._homepage.winfo_screenwidth()
         screen_height = self._homepage.winfo_screenheight()
         window_width = int(screen_width * 0.75)
