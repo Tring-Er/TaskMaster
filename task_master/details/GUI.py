@@ -149,7 +149,7 @@ class GUI(Sendable, Readable):
     def _show_widjets(self) -> None:
         self._title_frame.pack(side="top", fill="x")
         self._options_frame.pack(side="left", fill="y")
-        self._tasks_frame.pack(side="left", fill="both")
+        self._tasks_frame.pack(side="left", fill="both", expand=True)
         self._title.pack(side="left")
         self._add_task_button.pack(fill="x")
         self._remove_task_button.pack(fill="x")
