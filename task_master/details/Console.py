@@ -37,8 +37,8 @@ class Console(Readable, Sendable):
                      "complete task",
                      "uncomplete task"}
     
-    def __init__(self) -> None:
-        self.file_manager = TextFile()
+    def __init__(self, tasks_file_path: str, exported_tasks_file_path: str) -> None:
+        self.file_manager = TextFile(tasks_file_path, exported_tasks_file_path)
     
     def run(self) -> None:
         """Make the program run"""

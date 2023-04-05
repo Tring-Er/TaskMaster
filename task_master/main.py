@@ -1,16 +1,20 @@
 from details.Console import Console
 from details.GUI import GUI
-from Loader import Loader
+from Program import Program
+
+
+RUN_IN_GUI_MODE = True
 
 
 def main() -> None:
-    Loader.startup()
-    gui_mode = True
-    if gui_mode:
-        gui = GUI(Loader.get_title_bar_icon())
+    program = Program()
+    tasks_file_path = program.get_tasks_file_path()
+    exported_tasks_file_path = program.get_exported_tasks_file_path()
+    if RUN_IN_GUI_MODE:
+        gui = GUI(program.get_title_bar_icon_path(),tasks_file_path, exported_tasks_file_path)
         gui.run()
     else:
-        console = Console()
+        console = Console(tasks_file_path, exported_tasks_file_path)
         console.run()
 
 

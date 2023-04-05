@@ -37,12 +37,12 @@ class GUI(Sendable, Readable):
     task_to_move = None
     current_theme = Themes.LIGHT_MODE
 
-    def __init__(self, icon_path: str) -> None:
+    def __init__(self, icon_path: str, tasks_file_path: str, exported_tasks_file_path: str) -> None:
         self._homepage = None
         self._create_homepage(icon_path)
         self._create_widjets()
         self._show_widjets()
-        self._text_file = TextFile()
+        self._text_file = TextFile(tasks_file_path, exported_tasks_file_path)
     
     def send(self, tasks: list[Task]) -> None:
         tasks_string = ""
