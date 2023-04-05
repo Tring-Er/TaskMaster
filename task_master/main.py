@@ -1,5 +1,5 @@
 from details.Console import Console
-from details.GUI import GUI
+from details.GUI.GUI import GUI
 from Program import Program
 
 
