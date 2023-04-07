@@ -1,0 +1,21 @@
+- Integration with other apps
+- Calendar view
+	- Others may book a spot in your calendar
+- Email management
+- File management (coud)
+- Web, Desktop and Mobile (all sync)
+- Random and recurring tasks
+- Tasks collections/lists
+- Multiple ways to perform the same action
+- Theme personalization
+- Tasks inside other tasks
+- Tags
+- Tasks sudjestion (based on present tasks)
+- Shared tasks
+- Easy capture notes
+- Convert random notes into more concrete ones
+- Different types of todo:
+	- Random lists (like a shopping list)
+	- Planning (temporary todo that will become part of a planning page/todo)
+	- Events (planned todo that goes on a calendar)
+- Check Notion for inspirations (almost most used todo app available)
