@@ -10,6 +10,7 @@ from entities.Task import Task
 from details.TextFile import TextFile
 from details.GUI.constants import *
 from details.GUI.Themes import Themes
+from details.GUI.widgets.Window import Window
 
 
 class GUI(Sendable, Readable):
@@ -17,12 +18,9 @@ class GUI(Sendable, Readable):
     def __init__(self, icon_path: str, tasks_file_path: str, exported_tasks_file_path: str) -> None:
         self.task_to_move = None
         self.current_theme = Themes.LIGHT_MODE
-        self.bootstrap(icon_path)
+        self.create_widjets(icon_path)
         self.show_widjets()
         self.text_file = TextFile(tasks_file_path, exported_tasks_file_path)
-    
-    def bootstrap(self, icon_path: str) -> None:
-        self.create_widjets(icon_path)
     
     def send(self, tasks: list[Task]) -> None:
         tasks_string = ""
@@ -53,6 +51,7 @@ class GUI(Sendable, Readable):
         self.main_window.mainloop()
     
     def create_window_widget(self, icon_path: str) -> None:
+        self.main_window = Window(PROJECT_TITLE, icon_path, 0.75, 0.75)
         self.main_window = Tk()
         self.main_window.title(PROJECT_TITLE)
         self.main_window.iconbitmap(icon_path)
