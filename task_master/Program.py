@@ -6,9 +6,12 @@ from ctypes import windll, byref, create_string_buffer
 class Program:
 
     def __init__(self) -> None:
-        self.required_folders = (self.get_taskmaster_folder_path(), self.get_tasks_folder_path())
-        self.startup()
+        self.required_folders = self.get_required_folders()
+        self.bootstrap()
     
+    def get_required_folders(self) -> tuple[str]:
+        return (self.get_taskmaster_folder_path(), self.get_tasks_folder_path())
+
     def get_user_home_path(self) -> str:
         return os.path.expanduser("~")
     
@@ -27,7 +30,7 @@ class Program:
     def get_exported_tasks_file_path(self) -> str:
         return os.path.join(self.get_tasks_folder_path(), r"exported_tasks.txt")
     
-    def startup(self) -> None:
+    def bootstrap(self) -> None:
         self.load_font(self.get_font_path())
         self.create_task_master_folders_if_not_present()
     

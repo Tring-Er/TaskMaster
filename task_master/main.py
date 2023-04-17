@@ -11,7 +11,7 @@ def main() -> None:
     tasks_file_path = program.get_tasks_file_path()
     exported_tasks_file_path = program.get_exported_tasks_file_path()
     if RUN_IN_GUI_MODE:
-        gui = GUI(program.get_title_bar_icon_path(),tasks_file_path, exported_tasks_file_path)
+        gui = GUI(program.get_title_bar_icon_path(), tasks_file_path, exported_tasks_file_path)
         gui.run()
     else:
         console = Console(tasks_file_path, exported_tasks_file_path)
