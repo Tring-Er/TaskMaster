@@ -12,5 +12,5 @@ class Widget(ABC):
         """Create the widget of the library"""
     
     @abstractmethod
-    def show(self) -> None:
+    def show(self, **kwargs: dict[str: any]) -> None:
         """Shows the widgets on the screen (and show the widget inside this one as well)"""

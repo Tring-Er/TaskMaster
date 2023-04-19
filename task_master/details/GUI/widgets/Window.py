@@ -24,7 +24,7 @@ class Window(Widget):
         for widget in self.widgets:
             widget.create(parent=self.tk_object)
     
-    def show(self) -> None:
+    def show(self, **kwargs: dict[str: any]) -> None:
         for widget in self.widgets:
             widget.show()
         self.tk_object.mainloop()
