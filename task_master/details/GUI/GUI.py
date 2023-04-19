@@ -48,26 +48,16 @@ class GUI(Sendable, Readable):
     
     def run(self) -> None:
         self.send(self.text_file.read())
-        self.main_window.mainloop()
+        self.main_window.show()
     
     def create_window_widget(self, icon_path: str) -> None:
         self.main_window = Window(PROJECT_TITLE, icon_path, 0.75, 0.75)
-        self.main_window = Tk()
-        self.main_window.title(PROJECT_TITLE)
-        self.main_window.iconbitmap(icon_path)
-        screen_width = self.main_window.winfo_screenwidth()
-        screen_height = self.main_window.winfo_screenheight()
-        window_width = int(screen_width * 0.75)
-        window_height = int(screen_height * 0.75)
-        x_coord = int(screen_width/2) - int(window_width/2)
-        y_coord = int(screen_height/2) - int(window_height/2)
-        centered_geometry = f"{window_width}x{window_height}+{x_coord}+{y_coord}"
-        self.main_window.geometry(centered_geometry)
+        self.main_window.create()
     
     def create_frame_widgets(self) -> None:
-        self.title_frame = Frame(self.main_window, bg="#421C6F")
-        self.options_frame = Frame(self.main_window, bg="#9562C4")
-        self.tasks_frame = Frame(self.main_window)
+        self.title_frame = Frame(self.main_window.tk_object, bg="#421C6F")
+        self.options_frame = Frame(self.main_window.tk_object, bg="#9562C4")
+        self.tasks_frame = Frame(self.main_window.tk_object)
         self.color_mode_frame = Frame(self.options_frame, bg="#9562C4")
     
     def create_text_widgets(self) -> None:
