@@ -1,6 +1,6 @@
 from sys import exit as sys_exit
 
-from tkinter import Tk, Button, Label, Text, Frame, END
+from tkinter import Button, Label, Text, END
 from tkinter.font import Font
 
 from use_cases.external_interfaces.Readable import Readable
@@ -11,6 +11,7 @@ from details.TextFile import TextFile
 from details.GUI.constants import *
 from details.GUI.Themes import Themes
 from details.GUI.widgets.Window import Window
+from details.GUI.widgets.Frame import Frame
 
 
 class GUI(Sendable, Readable):
@@ -19,6 +20,8 @@ class GUI(Sendable, Readable):
         self.task_to_move = None
         self.current_theme = Themes.LIGHT_MODE
         self.create_widjets(icon_path)
+        self.set_widgets_position()
+        self.main_window.show()
         self.show_widjets()
         self.text_file = TextFile(tasks_file_path, exported_tasks_file_path)
     
@@ -50,22 +53,26 @@ class GUI(Sendable, Readable):
         self.send(self.text_file.read())
         self.main_window.show()
     
+    def set_widgets_position(self) -> None:
+        self.main_window.add_widget(self.title_frame)
+        self.main_window.add_widget(self.options_frame)
+        self.main_window.add_widget(self.tasks_frame)
+    
     def create_window_widget(self, icon_path: str) -> None:
         self.main_window = Window(PROJECT_TITLE, icon_path, 0.75, 0.75)
         self.main_window.create()
     
     def create_frame_widgets(self) -> None:
-        self.title_frame = Frame(self.main_window.tk_object, bg="#421C6F")
-        self.options_frame = Frame(self.main_window.tk_object, bg="#9562C4")
-        self.tasks_frame = Frame(self.main_window.tk_object)
-        self.color_mode_frame = Frame(self.options_frame, bg="#9562C4")
+        self.title_frame = Frame("#421C6F", side="top", fill="x")
+        self.options_frame = Frame("#9562C4", side="left", fill="y")
+        self.tasks_frame = Frame("#F0F0F0", side="left", fill="both", expand=True)
     
     def create_text_widgets(self) -> None:
         self.task_box = Text(self.tasks_frame, height=1, width=25)
     
     def create_label_widgets(self) -> None:
         title_font = Font(family="Nexa Rust Slab Black Shadow 01", size=25)
-        self.title = Label(self.title_frame,
+        self.title = Label(self.title_frame.tk_object,
                             text=PROJECT_TITLE,
                             font=title_font,
                             bg="#421C6F",
@@ -129,9 +136,6 @@ class GUI(Sendable, Readable):
         self.create_button_widgets()
     
     def show_widjets(self) -> None:
-        self.title_frame.pack(side="top", fill="x")
-        self.options_frame.pack(side="left", fill="y")
-        self.tasks_frame.pack(side="left", fill="both", expand=True)
         self.title.pack(side="left")
         self.add_task_button.pack(fill="x")
         self.remove_task_button.pack(fill="x")
