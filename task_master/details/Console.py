@@ -1,7 +1,7 @@
 from enum import Enum
 from sys import exit as sys_exit
 
-from details.TextFile import TextFile
+from details.text_file.TextFile import TextFile
 from use_cases.external_interfaces.Readable import Readable
 from use_cases.external_interfaces.Sendable import Sendable
 from use_cases.TasksManager import TasksManager
@@ -37,8 +37,8 @@ class Console(Readable, Sendable):
                      "complete task",
                      "uncomplete task"}
     
-    def __init__(self, tasks_file_path: str, exported_tasks_file_path: str) -> None:
-        self.file_manager = TextFile(tasks_file_path, exported_tasks_file_path)
+    def __init__(self) -> None:
+        self.file_manager = TextFile()
     
     def run(self) -> None:
         """Make the program run"""

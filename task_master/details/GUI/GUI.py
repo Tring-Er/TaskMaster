@@ -7,23 +7,26 @@ from use_cases.external_interfaces.Readable import Readable
 from use_cases.external_interfaces.Sendable import Sendable
 from use_cases.TasksManager import TasksManager
 from entities.Task import Task
-from details.TextFile import TextFile
-from details.GUI.constants import *
-from details.GUI.Themes import Themes
-from details.GUI.widgets.Window import Window
-from details.GUI.widgets.Frame import Frame
+from details.text_file.TextFile import TextFile
+from details.gui.constants import *
+from details.gui.Themes import Themes
+from details.gui.widgets.Window import Window
+from details.gui.widgets.Frame import Frame
+from details.gui.loaders.FontLoader import FontLoader
+from details.gui.loaders.IconLoader import IconLoader
 
 
 class GUI(Sendable, Readable):
 
-    def __init__(self, icon_path: str, tasks_file_path: str, exported_tasks_file_path: str) -> None:
+    def __init__(self) -> None:
+        FontLoader.load_nexa_font()
         self.task_to_move = None
         self.current_theme = Themes.LIGHT_MODE
-        self.create_widjets(icon_path)
+        self.create_widjets(IconLoader.get_title_bar_icon_path())
         self.set_widgets_position()
         self.main_window.show()
         self.show_widjets()
-        self.text_file = TextFile(tasks_file_path, exported_tasks_file_path)
+        self.text_file = TextFile()
     
     def send(self, tasks: list[Task]) -> None:
         tasks_string = ""

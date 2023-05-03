@@ -3,6 +3,7 @@
 from use_cases.external_interfaces.Readable import Readable
 from use_cases.external_interfaces.Sendable import Sendable
 from entities.Task import Task
+from details.text_file.FolderCreator import FolderCreator
 
 
 _COMPLETED_LABEL = " COMPLETED"
@@ -10,9 +11,10 @@ _COMPLETED_LABEL = " COMPLETED"
 
 class TextFile(Readable, Sendable):
 
-    def __init__(self, tasks_file_path: str, exported_tasks_file_path: str) -> None:
-        self.tasks_file_path = tasks_file_path
-        self.exported_tasks_file_path = exported_tasks_file_path
+    def __init__(self) -> None:
+        FolderCreator.create_task_master_folders_if_not_present()
+        self.tasks_file_path = FolderCreator.get_tasks_file_path()
+        self.exported_tasks_file_path = FolderCreator.get_exported_tasks_file_path()
         self.create_file_if_not_present()
     
     def create_file_if_not_present(self) -> None:

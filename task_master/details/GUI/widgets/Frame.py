@@ -1,6 +1,6 @@
 from tkinter import Frame as TkFrame
 
-from details.GUI.widgets.Widget import Widget
+from details.gui.widgets.Widget import Widget
 
 
 class Frame(Widget):
