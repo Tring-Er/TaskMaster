@@ -1,6 +1,6 @@
 from sys import exit as sys_exit
 
-from tkinter import Button, Label, END
+from tkinter import Button, END
 from tkinter.font import Font
 
 from use_cases.external_interfaces.Readable import Readable
@@ -13,6 +13,7 @@ from details.gui.Themes import Themes
 from details.gui.widgets.Window import Window
 from details.gui.widgets.Frame import Frame
 from details.gui.widgets.Text import Text
+from details.gui.widgets.Label import Label
 from details.gui.loaders.FontLoader import FontLoader
 from details.gui.loaders.IconLoader import IconLoader
 
@@ -33,10 +34,10 @@ class GUI(Sendable, Readable):
         tasks_string = ""
         for task in tasks:
             tasks_string += self.task_to_string(task)
-        self.tasks_list.config(text=tasks_string)
+        self.tasks_list.tk_object.config(text=tasks_string)
     
     def read(self) -> list[Task]:
-        tasks_text = self.tasks_list["text"].split("\n")[:-1]
+        tasks_text = self.tasks_list.tk_object["text"].split("\n")[:-1]
         tasks = []
         for text in tasks_text:
             tasks.append(self.string_to_task(text))
@@ -85,12 +86,12 @@ class GUI(Sendable, Readable):
     
     def create_label_widgets(self) -> None:
         title_font = Font(family="Nexa Rust Slab Black Shadow 01", size=25)
-        self.title = Label(self.title_frame.tk_object,
-                            text=PROJECT_TITLE,
-                            font=title_font,
-                            bg="#421C6F",
-                            fg="white")
-        self.tasks_list = Label(self.tasks_frame.tk_object)
+        self.title = Label()  
+        self.title_frame.add_widget(self.title)
+        self.title.set_graphics(text=PROJECT_TITLE, font=title_font, background_color="#421C6F", foreground_color="white", position_options={"side": "left"})
+        self.tasks_list = Label()
+        self.tasks_frame.add_widget(self.tasks_list)
+        self.tasks_list.set_graphics()
     
     def create_button_widgets(self) -> None:
         buttons_font = Font(family="Helvetica", size=12)
@@ -149,13 +150,11 @@ class GUI(Sendable, Readable):
         self.create_button_widgets()
     
     def show_widjets(self) -> None:
-        self.title.pack(side="left")
         self.add_task_button.pack(fill="x")
         self.remove_task_button.pack(fill="x")
         self.order_task_button.pack(fill="x")
         self.complete_or_uncomplete_task.pack(fill="x")
         self.export_tasks_button.pack(fill="x")
-        self.tasks_list.pack()
         self.swap_theme_button.pack(side="bottom", fill="x")
         self.quit_button.pack(side="bottom", fill="x")
     

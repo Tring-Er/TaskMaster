@@ -29,7 +29,10 @@ class Text(ChildWidget):
         self.set_width(width)
     
     def show(self) -> None:
-        self._tk_object.pack(**self.position_options)
+        if self.position_options is None:
+            self._tk_object.pack()
+        else:
+            self._tk_object.pack(**self.position_options)
         for widget in self.widgets:
             widget.show()
     
@@ -41,4 +44,3 @@ class Text(ChildWidget):
     
     def set_width(self, width: int) -> None:
         self._tk_object.config(width=width)
-
