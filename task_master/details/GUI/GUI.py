@@ -22,7 +22,7 @@ class GUI(Sendable, Readable):
         FontLoader.load_nexa_font()
         self.task_to_move = None
         self.current_theme = Themes.LIGHT_MODE
-        self.create_widjets(IconLoader.get_title_bar_icon_path())
+        self.create_widjets()
         self.set_widgets_position()
         self.main_window.show()
         self.show_widjets()
@@ -61,17 +61,24 @@ class GUI(Sendable, Readable):
         self.main_window.add_widget(self.options_frame)
         self.main_window.add_widget(self.tasks_frame)
     
-    def create_window_widget(self, icon_path: str) -> None:
-        self.main_window = Window(PROJECT_TITLE, icon_path, 0.75, 0.75)
-        self.main_window.create()
+    def create_window_widget(self) -> None:
+        icon_path = IconLoader.get_title_bar_icon_path()
+        self.main_window = Window()
+        self.main_window.set_graphics(title = PROJECT_TITLE, icon_path = icon_path, percentage_of_screen_width_taken_by_window = 0.75, percentage_of_screen_height_taken_by_window = 0.75)
     
     def create_frame_widgets(self) -> None:
-        self.title_frame = Frame("#421C6F", side="top", fill="x")
-        self.options_frame = Frame("#9562C4", side="left", fill="y")
-        self.tasks_frame = Frame("#F0F0F0", side="left", fill="both", expand=True)
+        self.title_frame = Frame()
+        self.main_window.add_widget(self.title_frame)
+        self.title_frame.set_graphics(background_color = "#421C6F", position_options = {"side": "top", "fill": "x"})
+        self.options_frame = Frame()
+        self.main_window.add_widget(self.options_frame)
+        self.options_frame.set_graphics(background_color = "#9562C4", position_options = {"side": "left", "fill": "y"})
+        self.tasks_frame = Frame()
+        self.main_window.add_widget(self.tasks_frame)
+        self.tasks_frame.set_graphics(background_color = "#F0F0F0", position_options = {"side": "left", "fill": "both", "expand": True})
     
     def create_text_widgets(self) -> None:
-        self.task_box = Text(self.tasks_frame, height=1, width=25)
+        self.task_box = Text(self.tasks_frame.tk_object, height=1, width=25)
     
     def create_label_widgets(self) -> None:
         title_font = Font(family="Nexa Rust Slab Black Shadow 01", size=25)
@@ -80,59 +87,59 @@ class GUI(Sendable, Readable):
                             font=title_font,
                             bg="#421C6F",
                             fg="white")
-        self.tasks_list = Label(self.tasks_frame)
+        self.tasks_list = Label(self.tasks_frame.tk_object)
     
     def create_button_widgets(self) -> None:
         buttons_font = Font(family="Helvetica", size=12)
-        self.add_task_button = Button(self.options_frame,
+        self.add_task_button = Button(self.options_frame.tk_object,
                                        text=ADD_TASK_BUTTON,
                                        font=buttons_font,
                                        command=self.add_task,
                                        bg="#9562C4",
                                        activebackground='#9562C4',
                                        fg="white")
-        self.remove_task_button = Button(self.options_frame,
+        self.remove_task_button = Button(self.options_frame.tk_object,
                                           text=REMOVE_TASK_BUTTON,
                                           font=buttons_font,
                                           command=self.remove_task,
                                           bg="#9562C4",
                                           activebackground='#9562C4',
                                           fg="white")
-        self.order_task_button = Button(self.options_frame,
+        self.order_task_button = Button(self.options_frame.tk_object,
                                          text=ORDER_TASK_BUTTON,
                                          font=buttons_font,
                                          command=self.change_order,
                                          bg="#9562C4",
                                          activebackground='#9562C4',
                                          fg="white")
-        self.complete_or_uncomplete_task = Button(self.options_frame,
+        self.complete_or_uncomplete_task = Button(self.options_frame.tk_object,
                                                    text=COMPLETE_OR_UNCOMPLETE_BUTTON,
                                                    font=buttons_font,
                                                    command=self.complete_on_uncomplete_task,
                                                    bg="#9562C4",
                                                    activebackground='#9562C4',
                                                    fg="white")
-        self.export_tasks_button = Button(self.options_frame,
+        self.export_tasks_button = Button(self.options_frame.tk_object,
                                            text=EXPORT_BUTTON,
                                            font=buttons_font,
                                            command=self.export_tasks,
                                            bg="#9562C4",
                                            activebackground='#9562C4',
                                            fg="white")
-        self.quit_button = Button(self.options_frame,
+        self.quit_button = Button(self.options_frame.tk_object,
                              text=EXIT_BUTTON_TEXT,
                              font=buttons_font,
                              command=self.program_exit,
                              bg="#9562C4",
                              activebackground='#9562C4',
                              fg="white")
-        self.swap_theme_button = Button(self.options_frame,
+        self.swap_theme_button = Button(self.options_frame.tk_object,
                                   text=LIGHT_MODE_BUTTON,
                                   font=buttons_font,
                                   command=self.swap_theme_mode)
     
-    def create_widjets(self, icon_path: str) -> None:
-        self.create_window_widget(icon_path)
+    def create_widjets(self) -> None:
+        self.create_window_widget()
         self.create_frame_widgets()
         self.create_text_widgets()
         self.create_label_widgets()

@@ -1,30 +1,38 @@
 from tkinter import Frame as TkFrame
 
+from details.gui.widgets.ChildWidget import ChildWidget
 from details.gui.widgets.Widget import Widget
 
 
-class Frame(Widget):
+class Frame(ChildWidget):
     
-    def __init__(self, background_color: str, **position_options: dict[str: any]) -> None:
-        self.tk_object: TkFrame = None
+    def __init__(self) -> None:
+        self._tk_type = TkFrame
         self.parent: Widget = None
-        self.widgets: list[Widget] = None
-        self.background_color = background_color
-        self.position_options = position_options
+        self.widgets: list[Widget] = []
+        self.position_options = None
     
-    def add_widget(self, widget: Widget) -> None:
+    @property
+    def tk_object(self) -> object:
+        return self._tk_object
+    
+    def add_widget(self, widget: ChildWidget) -> None:
+        widget.set_parent(self)
         self.widgets.append(widget)
-        widget.set_parent(self.tk_object)
     
-    def create(self, **kwargs: dict[str: any]) -> None:
-        parent = kwargs.get("parent")
-        self.tk_object = TkFrame(parent)
-        self.set_background_color(self.background_color)
+    def set_graphics(self, **kwargs) -> None:
+        background_color: str = kwargs.get("background_color", None)
+        self.position_options: dict[str: ...] = kwargs.get("position_options", None)
+        self._tk_object: TkFrame = self._tk_type(self.parent.tk_object)
+        self.set_background_color(background_color)
     
     def show(self) -> None:
-        self.tk_object.pack(**self.position_options)
+        self._tk_object.pack(**self.position_options)
         for widget in self.widgets:
             widget.show()
     
+    def set_parent(self, widget: Widget) -> None:
+        self.parent = widget
+    
     def set_background_color(self, color: str) -> None:
-        self.tk_object.config(background=color)
+        self._tk_object.config(background=color)
