@@ -1,6 +1,6 @@
 from sys import exit as sys_exit
 
-from tkinter import Button, Label, Text, END
+from tkinter import Button, Label, END
 from tkinter.font import Font
 
 from use_cases.external_interfaces.Readable import Readable
@@ -12,6 +12,7 @@ from details.gui.constants import *
 from details.gui.Themes import Themes
 from details.gui.widgets.Window import Window
 from details.gui.widgets.Frame import Frame
+from details.gui.widgets.Text import Text
 from details.gui.loaders.FontLoader import FontLoader
 from details.gui.loaders.IconLoader import IconLoader
 
@@ -64,21 +65,23 @@ class GUI(Sendable, Readable):
     def create_window_widget(self) -> None:
         icon_path = IconLoader.get_title_bar_icon_path()
         self.main_window = Window()
-        self.main_window.set_graphics(title = PROJECT_TITLE, icon_path = icon_path, percentage_of_screen_width_taken_by_window = 0.75, percentage_of_screen_height_taken_by_window = 0.75)
+        self.main_window.set_graphics(title=PROJECT_TITLE, icon_path=icon_path, percentage_of_screen_width_taken_by_window=0.75, percentage_of_screen_height_taken_by_window=0.75)
     
     def create_frame_widgets(self) -> None:
         self.title_frame = Frame()
         self.main_window.add_widget(self.title_frame)
-        self.title_frame.set_graphics(background_color = "#421C6F", position_options = {"side": "top", "fill": "x"})
+        self.title_frame.set_graphics(background_color="#421C6F", position_options={"side": "top", "fill": "x"})
         self.options_frame = Frame()
         self.main_window.add_widget(self.options_frame)
-        self.options_frame.set_graphics(background_color = "#9562C4", position_options = {"side": "left", "fill": "y"})
+        self.options_frame.set_graphics(background_color="#9562C4", position_options={"side": "left", "fill": "y"})
         self.tasks_frame = Frame()
         self.main_window.add_widget(self.tasks_frame)
-        self.tasks_frame.set_graphics(background_color = "#F0F0F0", position_options = {"side": "left", "fill": "both", "expand": True})
+        self.tasks_frame.set_graphics(background_color="#F0F0F0", position_options={"side": "left", "fill": "both", "expand": True})
     
     def create_text_widgets(self) -> None:
-        self.task_box = Text(self.tasks_frame.tk_object, height=1, width=25)
+        self.task_box = Text()
+        self.tasks_frame.add_widget(self.task_box)
+        self.task_box.set_graphics(height=1, width=25, position_options={"fill": "x"})
     
     def create_label_widgets(self) -> None:
         title_font = Font(family="Nexa Rust Slab Black Shadow 01", size=25)
@@ -152,14 +155,13 @@ class GUI(Sendable, Readable):
         self.order_task_button.pack(fill="x")
         self.complete_or_uncomplete_task.pack(fill="x")
         self.export_tasks_button.pack(fill="x")
-        self.task_box.pack(fill="x")
         self.tasks_list.pack()
         self.swap_theme_button.pack(side="bottom", fill="x")
         self.quit_button.pack(side="bottom", fill="x")
     
     def get_task_from_task_box(self) -> Task | None:
-        task_text = self.task_box.get("1.0", END).replace("\n", "")
-        self.task_box.delete("1.0", END)
+        task_text = self.task_box.tk_object.get("1.0", END).replace("\n", "")
+        self.task_box.tk_object.delete("1.0", END)
         if task_text != "":
             return self.string_to_task(task_text)
     
