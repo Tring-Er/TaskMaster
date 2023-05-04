@@ -1,7 +1,6 @@
 from sys import exit as sys_exit
 
 from tkinter import Button, END
-from tkinter.font import Font
 
 from use_cases.external_interfaces.Readable import Readable
 from use_cases.external_interfaces.Sendable import Sendable
@@ -14,6 +13,7 @@ from details.gui.widgets.Window import Window
 from details.gui.widgets.Frame import Frame
 from details.gui.widgets.Text import Text
 from details.gui.widgets.Label import Label
+from details.gui.widgets.Font import Font
 from details.gui.loaders.FontLoader import FontLoader
 from details.gui.loaders.IconLoader import IconLoader
 
@@ -86,7 +86,7 @@ class GUI(Sendable, Readable):
     
     def create_label_widgets(self) -> None:
         title_font = Font(family="Nexa Rust Slab Black Shadow 01", size=25)
-        self.title = Label()  
+        self.title = Label()
         self.title_frame.add_widget(self.title)
         self.title.set_graphics(text=PROJECT_TITLE, font=title_font, background_color="#421C6F", foreground_color="white", position_options={"side": "left"})
         self.tasks_list = Label()
@@ -97,49 +97,49 @@ class GUI(Sendable, Readable):
         buttons_font = Font(family="Helvetica", size=12)
         self.add_task_button = Button(self.options_frame.tk_object,
                                        text=ADD_TASK_BUTTON,
-                                       font=buttons_font,
+                                       font=buttons_font.tk_object,
                                        command=self.add_task,
                                        bg="#9562C4",
                                        activebackground='#9562C4',
                                        fg="white")
         self.remove_task_button = Button(self.options_frame.tk_object,
                                           text=REMOVE_TASK_BUTTON,
-                                          font=buttons_font,
+                                          font=buttons_font.tk_object,
                                           command=self.remove_task,
                                           bg="#9562C4",
                                           activebackground='#9562C4',
                                           fg="white")
         self.order_task_button = Button(self.options_frame.tk_object,
                                          text=ORDER_TASK_BUTTON,
-                                         font=buttons_font,
+                                         font=buttons_font.tk_object,
                                          command=self.change_order,
                                          bg="#9562C4",
                                          activebackground='#9562C4',
                                          fg="white")
         self.complete_or_uncomplete_task = Button(self.options_frame.tk_object,
                                                    text=COMPLETE_OR_UNCOMPLETE_BUTTON,
-                                                   font=buttons_font,
+                                                   font=buttons_font.tk_object,
                                                    command=self.complete_on_uncomplete_task,
                                                    bg="#9562C4",
                                                    activebackground='#9562C4',
                                                    fg="white")
         self.export_tasks_button = Button(self.options_frame.tk_object,
                                            text=EXPORT_BUTTON,
-                                           font=buttons_font,
+                                           font=buttons_font.tk_object,
                                            command=self.export_tasks,
                                            bg="#9562C4",
                                            activebackground='#9562C4',
                                            fg="white")
         self.quit_button = Button(self.options_frame.tk_object,
                              text=EXIT_BUTTON_TEXT,
-                             font=buttons_font,
+                             font=buttons_font.tk_object,
                              command=self.program_exit,
                              bg="#9562C4",
                              activebackground='#9562C4',
                              fg="white")
         self.swap_theme_button = Button(self.options_frame.tk_object,
                                   text=LIGHT_MODE_BUTTON,
-                                  font=buttons_font,
+                                  font=buttons_font.tk_object,
                                   command=self.swap_theme_mode)
     
     def create_widjets(self) -> None:

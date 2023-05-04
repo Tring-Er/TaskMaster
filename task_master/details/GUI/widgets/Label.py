@@ -1,8 +1,8 @@
 from tkinter import Label as TkLabel
-from tkinter.font import Font
 
 from details.gui.widgets.Widget import Widget
 from details.gui.widgets.ChildWidget import ChildWidget
+from details.gui.widgets.Font import Font
 
 
 class Label(ChildWidget):
@@ -54,6 +54,5 @@ class Label(ChildWidget):
         self._tk_object.config(text=text)
     
     def set_font(self, font: Font) -> None:
-        self._tk_object.config(font=font)
-
-
+        if font is not None:
+            self._tk_object.config(font=font.tk_object)
