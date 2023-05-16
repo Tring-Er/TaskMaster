@@ -130,22 +130,28 @@ class GUI(Sendable, Readable):
     def add_task(self) -> None:
         task = self.get_task_from_task_box()
         if task is not None:
-            TasksManager.add_task(task, self.text_file)
-            self.send(self.text_file.read())
+            stored_tasks = self.text_file.read()
+            new_tasks = TasksManager.add_task(stored_tasks, task)
+            self.text_file.send(new_tasks)
+            self.send(new_tasks)
     
     def remove_task(self) -> None:
         task = self.get_task_from_task_box()
         if task is not None:
-            TasksManager.remove_task(task, self.text_file)
-            self.send(self.text_file.read())
+            stored_tasks = self.text_file.read()
+            new_tasks_list = TasksManager.remove_task(stored_tasks, task)
+            self.text_file.send(new_tasks_list)
+            self.send(new_tasks_list)
     
     def change_order(self) -> None:
         task = self.get_task_from_task_box()
         if task is not None:
             if self.task_to_move is not None:
-                TasksManager.change_task_order(self.task_to_move, task, self.text_file)
+                stored_tasks = self.text_file.read()
+                new_tasks_list = TasksManager.change_task_order(stored_tasks, self.task_to_move, task)
+                self.text_file.send(new_tasks_list)
                 self.task_to_move = None
-                self.send(self.text_file.read())
+                self.send(new_tasks_list)
                 return
             self.task_to_move = task
     
@@ -154,13 +160,15 @@ class GUI(Sendable, Readable):
     
     def complete_on_uncomplete_task(self) -> None:
         task = self.get_task_from_task_box()
-        task = TasksManager.get_task(task, self.text_file)
+        stored_tasks = self.text_file.read()
+        task = TasksManager.get_task(stored_tasks, task)
         if task is not None:
             if task.is_completed:
-                TasksManager.mark_task_as_not_completed(task, self.text_file)
-            if not task.is_completed:
-                TasksManager.mark_task_as_completed(task, self.text_file)
-            self.send(self.text_file.read())
+                new_tasks_list = TasksManager.mark_task_as_not_completed(stored_tasks, task)
+            elif not task.is_completed:
+                new_tasks_list = TasksManager.mark_task_as_completed(stored_tasks, task)
+            self.text_file.send(new_tasks_list)
+            self.send(stored_tasks)
     
     def swap_theme_mode(self) -> None:
         if self.current_theme is Themes.LIGHT_MODE:
