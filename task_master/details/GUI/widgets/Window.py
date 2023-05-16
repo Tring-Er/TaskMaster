@@ -19,7 +19,7 @@ class Window(Widget):
         widget.set_parent(self)
         self.widgets.append(widget)
     
-    def set_graphics(self, **kwargs) -> None:
+    def set_params(self, **kwargs) -> None:
         title: str = kwargs.get("title", None)
         icon_path: str = kwargs.get("icon_path", None)
         percentage_of_screen_width_taken_by_window: float = kwargs.get("percentage_of_screen_width_taken_by_window", None)

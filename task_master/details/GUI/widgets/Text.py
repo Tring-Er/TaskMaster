@@ -20,7 +20,7 @@ class Text(ChildWidget):
         widget.set_parent(self)
         self.widgets.append(widget)
     
-    def set_graphics(self, **kwargs) -> None:
+    def set_params(self, **kwargs) -> None:
         height: int = kwargs.get("height", None)
         width: int = kwargs.get("width", None)
         self.position_options: dict[str: ...] = kwargs.get("position_options", None)

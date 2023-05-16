@@ -20,7 +20,7 @@ class Frame(ChildWidget):
         widget.set_parent(self)
         self.widgets.append(widget)
     
-    def set_graphics(self, **kwargs) -> None:
+    def set_params(self, **kwargs) -> None:
         background_color: str = kwargs.get("background_color", None)
         self.position_options: dict[str: ...] = kwargs.get("position_options", None)
         self._tk_object: TkFrame = self._tk_type(self.parent.tk_object)

@@ -13,7 +13,7 @@ class Widget(ABC):
         """Adds a widget inside this widget"""
     
     @abstractmethod
-    def set_graphics(self, **kwargs) -> None:
+    def set_params(self, **kwargs) -> None:
         """Create the widget of the library"""
     
     @abstractmethod

@@ -1,6 +1,6 @@
 from sys import exit as sys_exit
 
-from tkinter import Button, END
+from tkinter import END
 
 from use_cases.external_interfaces.Readable import Readable
 from use_cases.external_interfaces.Sendable import Sendable
@@ -14,6 +14,7 @@ from details.gui.widgets.Frame import Frame
 from details.gui.widgets.Text import Text
 from details.gui.widgets.Label import Label
 from details.gui.widgets.Font import Font
+from details.gui.widgets.Button import Button
 from details.gui.loaders.FontLoader import FontLoader
 from details.gui.loaders.IconLoader import IconLoader
 
@@ -25,9 +26,7 @@ class GUI(Sendable, Readable):
         self.task_to_move = None
         self.current_theme = Themes.LIGHT_MODE
         self.create_widjets()
-        self.set_widgets_position()
         self.main_window.show()
-        self.show_widjets()
         self.text_file = TextFile()
     
     def send(self, tasks: list[Task]) -> None:
@@ -58,89 +57,59 @@ class GUI(Sendable, Readable):
         self.send(self.text_file.read())
         self.main_window.show()
     
-    def set_widgets_position(self) -> None:
-        self.main_window.add_widget(self.title_frame)
-        self.main_window.add_widget(self.options_frame)
-        self.main_window.add_widget(self.tasks_frame)
-    
     def create_window_widget(self) -> None:
         icon_path = IconLoader.get_title_bar_icon_path()
         self.main_window = Window()
-        self.main_window.set_graphics(title=PROJECT_TITLE, icon_path=icon_path, percentage_of_screen_width_taken_by_window=0.75, percentage_of_screen_height_taken_by_window=0.75)
+        self.main_window.set_params(title=PROJECT_TITLE, icon_path=icon_path, percentage_of_screen_width_taken_by_window=0.75, percentage_of_screen_height_taken_by_window=0.75)
     
     def create_frame_widgets(self) -> None:
         self.title_frame = Frame()
         self.main_window.add_widget(self.title_frame)
-        self.title_frame.set_graphics(background_color="#421C6F", position_options={"side": "top", "fill": "x"})
+        self.title_frame.set_params(background_color="#421C6F", position_options={"side": "top", "fill": "x"})
         self.options_frame = Frame()
         self.main_window.add_widget(self.options_frame)
-        self.options_frame.set_graphics(background_color="#9562C4", position_options={"side": "left", "fill": "y"})
+        self.options_frame.set_params(background_color="#9562C4", position_options={"side": "left", "fill": "y"})
         self.tasks_frame = Frame()
         self.main_window.add_widget(self.tasks_frame)
-        self.tasks_frame.set_graphics(background_color="#F0F0F0", position_options={"side": "left", "fill": "both", "expand": True})
+        self.tasks_frame.set_params(background_color="#F0F0F0", position_options={"side": "left", "fill": "both", "expand": True})
     
     def create_text_widgets(self) -> None:
         self.task_box = Text()
         self.tasks_frame.add_widget(self.task_box)
-        self.task_box.set_graphics(height=1, width=25, position_options={"fill": "x"})
+        self.task_box.set_params(height=1, width=25, position_options={"fill": "x"})
     
     def create_label_widgets(self) -> None:
         title_font = Font(family="Nexa Rust Slab Black Shadow 01", size=25)
         self.title = Label()
         self.title_frame.add_widget(self.title)
-        self.title.set_graphics(text=PROJECT_TITLE, font=title_font, background_color="#421C6F", foreground_color="white", position_options={"side": "left"})
+        self.title.set_params(text=PROJECT_TITLE, font=title_font, background_color="#421C6F", foreground_color="white", position_options={"side": "left"})
         self.tasks_list = Label()
         self.tasks_frame.add_widget(self.tasks_list)
-        self.tasks_list.set_graphics()
+        self.tasks_list.set_params()
     
     def create_button_widgets(self) -> None:
         buttons_font = Font(family="Helvetica", size=12)
-        self.add_task_button = Button(self.options_frame.tk_object,
-                                       text=ADD_TASK_BUTTON,
-                                       font=buttons_font.tk_object,
-                                       command=self.add_task,
-                                       bg="#9562C4",
-                                       activebackground='#9562C4',
-                                       fg="white")
-        self.remove_task_button = Button(self.options_frame.tk_object,
-                                          text=REMOVE_TASK_BUTTON,
-                                          font=buttons_font.tk_object,
-                                          command=self.remove_task,
-                                          bg="#9562C4",
-                                          activebackground='#9562C4',
-                                          fg="white")
-        self.order_task_button = Button(self.options_frame.tk_object,
-                                         text=ORDER_TASK_BUTTON,
-                                         font=buttons_font.tk_object,
-                                         command=self.change_order,
-                                         bg="#9562C4",
-                                         activebackground='#9562C4',
-                                         fg="white")
-        self.complete_or_uncomplete_task = Button(self.options_frame.tk_object,
-                                                   text=COMPLETE_OR_UNCOMPLETE_BUTTON,
-                                                   font=buttons_font.tk_object,
-                                                   command=self.complete_on_uncomplete_task,
-                                                   bg="#9562C4",
-                                                   activebackground='#9562C4',
-                                                   fg="white")
-        self.export_tasks_button = Button(self.options_frame.tk_object,
-                                           text=EXPORT_BUTTON,
-                                           font=buttons_font.tk_object,
-                                           command=self.export_tasks,
-                                           bg="#9562C4",
-                                           activebackground='#9562C4',
-                                           fg="white")
-        self.quit_button = Button(self.options_frame.tk_object,
-                             text=EXIT_BUTTON_TEXT,
-                             font=buttons_font.tk_object,
-                             command=self.program_exit,
-                             bg="#9562C4",
-                             activebackground='#9562C4',
-                             fg="white")
-        self.swap_theme_button = Button(self.options_frame.tk_object,
-                                  text=LIGHT_MODE_BUTTON,
-                                  font=buttons_font.tk_object,
-                                  command=self.swap_theme_mode)
+        self.add_task_button = Button()
+        self.options_frame.add_widget(self.add_task_button)
+        self.add_task_button.set_params(command=self.add_task, text=ADD_TASK_BUTTON, font=buttons_font, background_color="#9562C4", foreground_color="white", active_background_color='#9562C4', position_options={"fill": "x"})
+        self.remove_task_button = Button()
+        self.options_frame.add_widget(self.remove_task_button)
+        self.remove_task_button.set_params(command=self.remove_task, text=REMOVE_TASK_BUTTON, font=buttons_font, background_color="#9562C4", foreground_color="white", active_background_color='#9562C4', position_options={"fill": "x"})
+        self.order_task_button = Button()
+        self.options_frame.add_widget(self.order_task_button)
+        self.order_task_button.set_params(command=self.change_order, text=ORDER_TASK_BUTTON, font=buttons_font, background_color="#9562C4", foreground_color="white", active_background_color='#9562C4', position_options={"fill": "x"})
+        self.complete_or_uncomplete_task_button = Button()
+        self.options_frame.add_widget(self.complete_or_uncomplete_task_button)
+        self.complete_or_uncomplete_task_button.set_params(command=self.complete_on_uncomplete_task, text=COMPLETE_OR_UNCOMPLETE_BUTTON, font=buttons_font, background_color="#9562C4", foreground_color="white", active_background_color='#9562C4', position_options={"fill": "x"})
+        self.export_tasks_button = Button()
+        self.options_frame.add_widget(self.export_tasks_button)
+        self.export_tasks_button.set_params(command=self.export_tasks, text=EXPORT_BUTTON, font=buttons_font, background_color="#9562C4", foreground_color="white", active_background_color='#9562C4', position_options={"fill": "x"})
+        self.quit_button = Button()
+        self.options_frame.add_widget(self.quit_button)
+        self.quit_button.set_params(command=self.program_exit, text=EXIT_BUTTON_TEXT, font=buttons_font, background_color="#9562C4", foreground_color="white", active_background_color='#9562C4', position_options={"side": "bottom", "fill": "x"})
+        self.swap_theme_button = Button()
+        self.options_frame.add_widget(self.swap_theme_button)
+        self.swap_theme_button.set_params(command=self.swap_theme_mode, text=LIGHT_MODE_BUTTON, font=buttons_font, position_options={"side": "bottom", "fill": "x"})
     
     def create_widjets(self) -> None:
         self.create_window_widget()
@@ -148,15 +117,6 @@ class GUI(Sendable, Readable):
         self.create_text_widgets()
         self.create_label_widgets()
         self.create_button_widgets()
-    
-    def show_widjets(self) -> None:
-        self.add_task_button.pack(fill="x")
-        self.remove_task_button.pack(fill="x")
-        self.order_task_button.pack(fill="x")
-        self.complete_or_uncomplete_task.pack(fill="x")
-        self.export_tasks_button.pack(fill="x")
-        self.swap_theme_button.pack(side="bottom", fill="x")
-        self.quit_button.pack(side="bottom", fill="x")
     
     def get_task_from_task_box(self) -> Task | None:
         task_text = self.task_box.tk_object.get("1.0", END).replace("\n", "")
@@ -205,21 +165,21 @@ class GUI(Sendable, Readable):
     def swap_theme_mode(self) -> None:
         if self.current_theme is Themes.LIGHT_MODE:
             self.set_dark_mode()
-            self.swap_theme_button["text"] = DARK_MODE_BUTTON
+            self.swap_theme_button._tk_object["text"] = DARK_MODE_BUTTON
         else:
             self.set_light_mode()
-            self.swap_theme_button["text"] = LIGHT_MODE_BUTTON
+            self.swap_theme_button._tk_object["text"] = LIGHT_MODE_BUTTON
     
     def set_dark_mode(self) -> None:
-        self.title["fg"] = "black"
-        self.tasks_frame["bg"] = "black"
-        self.tasks_list["bg"] = "black"
-        self.tasks_list["fg"] = "white"
+        self.title._tk_object["fg"] = "black"
+        self.tasks_frame._tk_object["bg"] = "black"
+        self.tasks_list._tk_object["bg"] = "black"
+        self.tasks_list._tk_object["fg"] = "white"
         self.current_theme = Themes.DARK_MODE
     
     def set_light_mode(self) -> None:
-        self.title["fg"] = "white"
-        self.tasks_frame["bg"] = "#f0f0f0"
-        self.tasks_list["bg"] = "#f0f0f0"
-        self.tasks_list["fg"] = "black"
+        self.title._tk_object["fg"] = "white"
+        self.tasks_frame._tk_object["bg"] = "#f0f0f0"
+        self.tasks_list._tk_object["bg"] = "#f0f0f0"
+        self.tasks_list._tk_object["fg"] = "black"
         self.current_theme = Themes.LIGHT_MODE
