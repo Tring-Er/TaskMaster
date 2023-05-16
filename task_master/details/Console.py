@@ -7,6 +7,7 @@ from use_cases.external_interfaces.Sendable import Sendable
 from use_cases.TasksManager import TasksManager
 from entities.Task import Task
 
+# DEPRECATED
 
 class Messages(Enum):
     """All Messages used by console_manager"""

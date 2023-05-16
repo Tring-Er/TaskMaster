@@ -7,8 +7,7 @@ RUN_IN_GUI_MODE = True
 
 def main() -> None:
     if RUN_IN_GUI_MODE:
-        gui = GUI()
-        gui.run()
+        GUI()
     else:
         console = Console()
         console.run()

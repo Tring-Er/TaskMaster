@@ -23,11 +23,11 @@ class GUI(Sendable, Readable):
 
     def __init__(self) -> None:
         FontLoader.load_nexa_font()
+        self.text_file = TextFile()
         self.task_to_move = None
         self.current_theme = Themes.LIGHT_MODE
         self.create_widjets()
-        self.main_window.show()
-        self.text_file = TextFile()
+        self.run()
     
     def send(self, tasks: list[Task]) -> None:
         tasks_string = ""
