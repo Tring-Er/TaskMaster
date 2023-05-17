@@ -21,4 +21,4 @@ class FontLoader:
 
     @staticmethod
     def get_font_path() -> str:
-        return os.path.join(ProgramData.get_current_folder_path(), "resources", "fonts", "NexaRustSlab-BlackShadow01.otf")
+        return os.path.join(ProgramData.get_current_folder_path(), "details", "gui", "resources", "fonts", "NexaRustSlab-BlackShadow01.otf")
